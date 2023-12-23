@@ -1,6 +1,6 @@
 # tidymmm
 
-Tidy tool and extensions for MMM
+Tidy tools and extensions for MMM
 
 This package has two objectives
 

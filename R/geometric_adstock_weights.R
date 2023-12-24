@@ -9,7 +9,6 @@
 #' geometric_adstock_weights is a function that is called to generate a vector of weights
 #' that define how media impressions will be decayed in present and carried over into the future.
 #'
-#'
 #' @examples
 #' geometric_adstock_weights()
 #' geometric_adstock_weights(decay = 0.1)

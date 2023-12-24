@@ -13,6 +13,21 @@ adstock_w(x, w, l)
 
 \item{l}{maximum adstock length}
 }
+\value{
+a numeric vector of length(x) with adstock transformed media impressions.
+}
 \description{
-Apply Adstock Weights
+A function that will convolve over the one dimensional vector of raw impressions over time
+and apply the adstock weights.
+}
+\examples{
+data(mmm_imps)
+x <- mmm_imps$mi_banners
+w <- geometric_adstock_weights()
+l <- length(w)
+a <- adstock_w(x, w, l)
+
+x[1:12]
+a[1:12]
+
 }

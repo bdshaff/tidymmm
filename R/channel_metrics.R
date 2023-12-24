@@ -1,6 +1,6 @@
 #'Channel Metrics
 #'
-#' @param model_decomp model decomposition table
+#'@param model_decomp model decomposition table
 #'
 #'@export
 

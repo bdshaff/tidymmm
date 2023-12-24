@@ -6,6 +6,15 @@
 \alias{tidymmm-package}
 \title{tidymmm: Tools For Tidy Marketing Mix Modeling}
 \description{
+\if{html}{\figure{logo.png}{options: style='float: right' alt='logo' width='120'}}
+
 Package of MMM tools that work with the tidymodels framework and post modeling tools for model evaluation and optimization.
+}
+\seealso{
+Useful links:
+\itemize{
+  \item \url{https://bdshaff.github.io/tidymmm/}
+}
+
 }
 \keyword{internal}

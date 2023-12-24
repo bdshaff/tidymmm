@@ -13,6 +13,17 @@ geometric_adstock_weights(decay = 0.5, max_carryover = 12, normalize = TRUE)
 
 \item{normalize}{should the result be scaled?}
 }
+\value{
+a numeric vector of weights of length (max_carryover)
+}
 \description{
-Geometric Adstock Weights
+geometric_adstock_weights is a function that is called to generate a vector of weights
+that define how media impressions will be decayed in present and carried over into the future.
+}
+\examples{
+geometric_adstock_weights()
+geometric_adstock_weights(decay = 0.1)
+geometric_adstock_weights(max_carryover = 3)
+geometric_adstock_weights(decay = 0.4, max_carryover = 4, normalize = FALSE)
+
 }

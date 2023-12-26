@@ -34,7 +34,8 @@ y[1:12]
 y_scaled[1:12]
 
 plot(sort(x), sort(y), type = "p", main = 'Hill Saturated x (scaled to [0-1])')
-plot(sort(x), sort(y_scaled), type="p", main = "Scaled to Back to scale of x")}
+plot(sort(x), sort(y_scaled), type="p", main = "Scaled to Back to scale of x")
+points(sort(x), sort(x), col = 2)}
 }
 \value{
 a numeric vector of length(x) with saturated media impressions.

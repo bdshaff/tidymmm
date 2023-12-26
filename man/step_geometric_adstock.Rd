@@ -2,7 +2,7 @@
 % Please edit documentation in R/step_geometric_adstock.R
 \name{step_geometric_adstock}
 \alias{step_geometric_adstock}
-\title{Step Geometric Adstock}
+\title{Geometric Adstock Transformation}
 \usage{
 step_geometric_adstock(
   recipe,
@@ -17,22 +17,36 @@ step_geometric_adstock(
 )
 }
 \arguments{
-\item{recipe}{recipe}
+\item{recipe}{A recipe object. The step will be added to the sequence of operations for this recipe.}
 
-\item{role}{role}
+\item{...}{One or more selector functions to choose variables for this step. See selections() for more details.}
 
-\item{trained}{trained or not}
+\item{role}{For model terms created by this step, what analysis role should they be assigned? By default, the new columns created by this step from the original variables will be used as predictors in a model.}
 
-\item{decay}{decay rate}
+\item{trained}{A logical to indicate if the quantities for preprocessing have been estimated.}
 
-\item{max_carryover}{max_carryover}
+\item{decay}{Decay Rate parameter for the geometric adstock transformation}
 
-\item{columns}{columns}
+\item{max_carryover}{Maximum Carryover parameter for the geometric adstock transformation}
 
-\item{skip}{FALSE}
+\item{columns}{A character string of the selected variable names. This field is a placeholder and will be populated once prep() is used.}
 
-\item{id}{id}
+\item{skip}{A logical. Should the step be skipped when the recipe is baked by bake()? While all operations are baked when prep() is run, some operations may not be able to be conducted on new data (e.g. processing the outcome variable(s)). Care should be taken when using skip = TRUE as it may affect the computations for subsequent operations.}
+
+\item{id}{A character string that is unique to this step to identify it}
+}
+\value{
+An updated version of recipe with the new step added to the sequence of any existing operations.
 }
 \description{
-user step function that takes the recipe and adds to it
+step_geometric_adstock() creates a specification of a recipe step that will adstock transform data.
+}
+\examples{
+library(tidymodels)
+library(tidymmm)
+data(mmm_imps)
+mmm_recipe <-
+  recipe(kpi_sales ~ mi_tv, data = mmm_imps) |>
+  step_geometric_adstock(mi_tv)
+
 }

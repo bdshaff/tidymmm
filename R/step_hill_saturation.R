@@ -1,15 +1,28 @@
-#' user step function that tackes the recipe and adds to it
+#' Hill Saturation Step
 #'
-#' @param recipe recipe
-#' @param role role
-#' @param trained trained or not
-#' @param half_saturation half_saturation
-#' @param shape shape
-#' @param nu nu
-#' @param max_ref max_ref
-#' @param columns columns
-#' @param skip FALSE
-#' @param id id
+#' step_hill_saturation() creates a specification of a recipe step that will apply the hill saturation transformation to data.
+#'
+#' @param recipe A recipe object. The step will be added to the sequence of operations for this recipe.
+#' @param ... One or more selector functions to choose variables for this step. See selections() for more details.
+#' @param role For model terms created by this step, what analysis role should they be assigned? By default, the new columns created by this step from the original variables will be used as predictors in a model.
+#' @param trained A logical to indicate if the quantities for preprocessing have been estimated.
+#' @param half_saturation Half Saturation of the hill saturation transformation
+#' @param shape shape parameter of the hill saturation transformation
+#' @param nu nu parameter of the hill saturation transformation
+#' @param max_ref A logical. Should the data be scaled back to the original scale.
+#' @param columns A character string of the selected variable names. This field is a placeholder and will be populated once prep() is used.
+#' @param skip A logical. Should the step be skipped when the recipe is baked by bake()? While all operations are baked when prep() is run, some operations may not be able to be conducted on new data (e.g. processing the outcome variable(s)). Care should be taken when using skip = TRUE as it may affect the computations for subsequent operations.
+#' @param id A character string that is unique to this step to identify it
+#'
+#'@return An updated version of recipe with the new step added to the sequence of any existing operations.
+#'
+#'@examples
+#' library(tidymodels)
+#' library(tidymmm)
+#' data(mmm_imps)
+#' mmm_recipe <-
+#'   recipe(kpi_sales ~ mi_tv, data = mmm_imps) |>
+#'   step_hill_saturation(mi_tv)
 #'
 #' @export
 step_hill_saturation <- function(

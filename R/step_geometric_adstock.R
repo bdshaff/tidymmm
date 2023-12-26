@@ -1,19 +1,28 @@
-#'Step Geometric Adstock
+#'Geometric Adstock Transformation
 #'
-#'user step function that takes the recipe and adds to it
+#'step_geometric_adstock() creates a specification of a recipe step that will adstock transform data.
 #'
-#' @param recipe recipe
-#' @param role role
-#' @param trained trained or not
-#' @param decay decay rate
-#' @param max_carryover max_carryover
-#' @param columns columns
-#' @param skip FALSE
-#' @param id id
+#'@param recipe A recipe object. The step will be added to the sequence of operations for this recipe.
+#'@param ... One or more selector functions to choose variables for this step. See selections() for more details.
+#'@param role For model terms created by this step, what analysis role should they be assigned? By default, the new columns created by this step from the original variables will be used as predictors in a model.
+#'@param trained A logical to indicate if the quantities for preprocessing have been estimated.
+#'@param decay Decay Rate parameter for the geometric adstock transformation
+#'@param max_carryover Maximum Carryover parameter for the geometric adstock transformation
+#'@param columns A character string of the selected variable names. This field is a placeholder and will be populated once prep() is used.
+#'@param skip A logical. Should the step be skipped when the recipe is baked by bake()? While all operations are baked when prep() is run, some operations may not be able to be conducted on new data (e.g. processing the outcome variable(s)). Care should be taken when using skip = TRUE as it may affect the computations for subsequent operations.
+#'@param id A character string that is unique to this step to identify it
 #'
+#'@return An updated version of recipe with the new step added to the sequence of any existing operations.
 #'
-#' @export
+#' @examples
+#' library(tidymodels)
+#' library(tidymmm)
+#' data(mmm_imps)
+#' mmm_recipe <-
+#'   recipe(kpi_sales ~ mi_tv, data = mmm_imps) |>
+#'   step_geometric_adstock(mi_tv)
 #'
+#'@export
 step_geometric_adstock <- function(
     recipe,
     ...,
@@ -41,7 +50,7 @@ step_geometric_adstock <- function(
 }
 
 
-#' @exportS3Method recipes::prep
+#'@exportS3Method recipes::prep
 prep.step_geometric_adstock <- function(x, training, info = NULL, ...) {
   col_names <- recipes::recipes_eval_select(x$terms, training, info)
   recipes::check_type(training[, col_names], types = c("double", "integer"))
@@ -72,7 +81,7 @@ step_geometric_adstock_new <- function(terms, role, trained, decay, max_carryove
   )
 }
 
-#' @exportS3Method recipes::bake
+#'@exportS3Method recipes::bake
 bake.step_geometric_adstock <- function(object, new_data, ...) {
   col_names <- names(object$columns)
   recipes::check_new_data(col_names, object, new_data)
@@ -103,7 +112,7 @@ get_geometric_adstock <- function(x, args = NULL) {
   res
 }
 
-#' @exportS3Method generics::tunable
+#'@exportS3Method generics::tunable
 tunable.step_geometric_adstock <- function (x, ...) {
   tibble::tibble(
     name = c("decay","max_carryover"),

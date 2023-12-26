@@ -21,9 +21,15 @@ hill_saturation(
 
 \item{nu}{nu}
 
-\item{max_ref}{should result be scale back to scale of x?
-
-#'@examples
+\item{max_ref}{should result be scale back to scale of x?}
+}
+\value{
+a numeric vector of length(x) with saturated media impressions.
+}
+\description{
+A function to apply the Hill Saturation to a vector of media impressions
+}
+\examples{
 data(mmm_imps)
 x <- mmm_imps$mi_banners
 y <- hill_saturation(x, shape = 1)
@@ -35,11 +41,6 @@ y_scaled[1:12]
 
 plot(sort(x), sort(y), type = "p", main = 'Hill Saturated x (scaled to [0-1])')
 plot(sort(x), sort(y_scaled), type="p", main = "Scaled to Back to scale of x")
-points(sort(x), sort(x), col = 2)}
-}
-\value{
-a numeric vector of length(x) with saturated media impressions.
-}
-\description{
-A function to apply the Hill Saturation to a vector of media impressions
+points(sort(x), sort(x), col = 2)
+
 }

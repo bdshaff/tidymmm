@@ -11,7 +11,7 @@
 #'@param nu nu
 #'@param max_ref should result be scale back to scale of x?
 #'
-#'#'@examples
+#'@examples
 #'data(mmm_imps)
 #'x <- mmm_imps$mi_banners
 #'y <- hill_saturation(x, shape = 1)

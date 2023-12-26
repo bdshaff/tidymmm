@@ -79,18 +79,7 @@
 
 
 <dt>max_ref</dt>
-<dd><p>should result be scale back to scale of x?</p>
-<p>#'@examples
-data(mmm_imps)
-x &lt;- mmm_imps$mi_banners
-y &lt;- hill_saturation(x, shape = 1)
-y_scaled &lt;- hill_saturation(x, shape = 1, max_ref = TRUE)</p>
-<p>x[1:12]
-y[1:12]
-y_scaled[1:12]</p>
-<p>plot(sort(x), sort(y), type = "p", main = 'Hill Saturated x (scaled to [0-1])')
-plot(sort(x), sort(y_scaled), type="p", main = "Scaled to Back to scale of x")
-points(sort(x), sort(x), col = 2)</p></dd>
+<dd><p>should result be scale back to scale of x?</p></dd>
 
 </dl></div>
     <div class="section level2">
@@ -100,6 +89,31 @@ points(sort(x), sort(x), col = 2)</p></dd>
 <p>a numeric vector of length(x) with saturated media impressions.</p>
     </div>
 
+    <div class="section level2">
+    <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">mmm_imps</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="va">mmm_imps</span><span class="op">$</span><span class="va">mi_banners</span></span></span>
+<span class="r-in"><span><span class="va">y</span> <span class="op">&lt;-</span> <span class="fu">hill_saturation</span><span class="op">(</span><span class="va">x</span>, shape <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">y_scaled</span> <span class="op">&lt;-</span> <span class="fu">hill_saturation</span><span class="op">(</span><span class="va">x</span>, shape <span class="op">=</span> <span class="fl">1</span>, max_ref <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">x</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">12</span><span class="op">]</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [1]    0.000 3731.596 2217.981    0.000 4274.270 2801.566 3329.304 2652.199</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [9] 3066.319 2415.696    0.000    0.000</span>
+<span class="r-in"><span><span class="va">y</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">12</span><span class="op">]</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [1] 0.0000000 0.6087971 0.4805148 0.0000000 0.6406154 0.5388220 0.5813179</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [8] 0.5251816 0.5611672 0.5018525 0.0000000 0.0000000</span>
+<span class="r-in"><span><span class="va">y_scaled</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">12</span><span class="op">]</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [1]    0.000 2753.500 2173.298    0.000 2897.409 2437.013 2629.215 2375.319</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [9] 2538.077 2269.805    0.000    0.000</span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/sort.html" class="external-link">sort</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/sort.html" class="external-link">sort</a></span><span class="op">(</span><span class="va">y</span><span class="op">)</span>, type <span class="op">=</span> <span class="st">"p"</span>, main <span class="op">=</span> <span class="st">'Hill Saturated x (scaled to [0-1])'</span><span class="op">)</span></span></span>
+<span class="r-plt img"><img src="hill_saturation-1.png" alt="" width="700" height="433"></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/sort.html" class="external-link">sort</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/sort.html" class="external-link">sort</a></span><span class="op">(</span><span class="va">y_scaled</span><span class="op">)</span>, type<span class="op">=</span><span class="st">"p"</span>, main <span class="op">=</span> <span class="st">"Scaled to Back to scale of x"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/points.html" class="external-link">points</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/sort.html" class="external-link">sort</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/sort.html" class="external-link">sort</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>, col <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span></span>
+<span class="r-plt img"><img src="hill_saturation-2.png" alt="" width="700" height="433"></span>
+<span class="r-in"><span></span></span>
+</code></pre></div>
+    </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
     </nav></aside></div>
 

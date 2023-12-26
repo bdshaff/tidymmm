@@ -1,0 +1,190 @@
+---
+title: "MMM-With-Carryover-And-Saturation"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{MMM-With-Carryover-And-Saturation}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  warning = FALSE,
+  message = FALSE,
+  fig.width = 8
+)
+```
+
+# Packages
+
+```{r setup}
+library(tidymodels)
+library(tidymmm)
+data(mmm_imps)
+data(mmm_spend)
+```
+
+## Additional Packages
+
+```{r}
+library(tidyverse)
+library(ggsci)
+library(broom.mixed)
+```
+
+# Data
+
+Impressions Data
+```{r}
+glimpse(mmm_imps)
+```
+Spend Data
+```{r}
+glimpse(mmm_spend)
+```
+
+# Model Recipes
+
+Recipe without transformation
+```{r}
+ln_init_mmm <-
+  recipe(kpi_sales ~ ., data = mmm_imps) |>
+  add_role(c(mi_tv, mi_radio, mi_banners), new_role = "mi") |>
+  update_role(Date, new_role = "temp") |>
+  update_role_requirements("temp", bake = FALSE)
+```
+
+Recipe with transformations with default hyperparameters
+```{r}
+cs_init_mmm <-
+  recipe(kpi_sales ~ ., data = mmm_imps) |>
+  add_role(c(mi_tv, mi_radio, mi_banners), new_role = "mi") |>
+  update_role(Date, new_role = "temp") |>
+  update_role_requirements("temp", bake = FALSE) |>
+  step_geometric_adstock(c(mi_banners, mi_tv, mi_radio)) |>
+  step_hill_saturation(mi_banners, max_ref = TRUE) |>
+  step_hill_saturation(mi_tv, max_ref = TRUE) |>
+  step_hill_saturation(mi_radio, max_ref = TRUE)
+```
+
+Recipe with tuned carryover and saturation transformations
+```{r}
+cs_tuned_mmm <-
+  recipe(kpi_sales ~ ., data = mmm_imps) |>
+  add_role(c(mi_tv, mi_radio, mi_banners), new_role = "mi") |>
+  update_role(Date, new_role = "temp") |>
+  update_role_requirements("temp", bake = FALSE) |>
+  step_geometric_adstock(mi_banners, decay = 0.226, max_carryover = 1) |>
+  step_hill_saturation(mi_banners, shape =  1.97, max_ref = TRUE) |>
+  step_geometric_adstock(mi_tv, decay = 0.233, max_carryover = 1) |>
+  step_hill_saturation(mi_tv, shape = 0.799, max_ref = TRUE) |>
+  step_geometric_adstock(mi_radio, decay = 0.382, max_carryover = 1) |>
+  step_hill_saturation(mi_radio, shape = 1.33, max_ref = TRUE)
+```
+
+# Setup Workflows
+
+Using the same linear regression with the Bayesian estimation engine `stan` from `rstanarm` package.
+
+```{r}
+lm_mod <- linear_reg() |> set_engine("stan")
+
+ln_init_wflow <-
+  workflow() |>
+  add_model(lm_mod) |>
+  add_recipe(ln_init_mmm)
+
+cs_init_wflow <-
+  workflow() |>
+  add_model(lm_mod) |>
+  add_recipe(cs_init_mmm)
+
+cs_tuned_wflow <-
+  workflow() |>
+  add_model(lm_mod) |>
+  add_recipe(cs_tuned_mmm)
+```
+
+
+# Fitting Models / Running Workflows
+
+```{r}
+ln_init_fit <- ln_init_wflow |> fit(data = mmm_imps)
+cs_init_fit <- cs_init_wflow |> fit(data = mmm_imps)
+cs_tuned_fit <- cs_tuned_wflow |> fit(data = mmm_imps)
+```
+
+## Use `tidy` to extract fitted parameters
+
+```{r}
+tidy(ln_init_fit, conf.int = TRUE)
+tidy(cs_init_fit, conf.int = TRUE)
+tidy(cs_tuned_fit, conf.int = TRUE)
+```
+
+# Post-Modeling
+
+Named List of trained models
+```{r}
+models <- list(
+  ln_init_fit = ln_init_fit,
+  cs_init_fit = cs_init_fit,
+  cs_tuned_fit = cs_tuned_fit
+  )
+```
+
+## Model Decomposition
+```{r, message=FALSE, warning=FALSE}
+model_decomps <- decompose(models, new_data = mmm_imps, spend_data = mmm_spend)
+model_decomps
+```
+
+## Model Metrics & Fit
+```{r}
+model_metrics(model_decomps, new_data = mmm_imps)
+```
+
+```{r}
+plot_model_fit(model_decomps)
+```
+
+
+## Contributions
+
+Contribution percent breakdown
+```{r}
+plot_base_contribution(model_decomps)
+plot_channel_contribution(model_decomps)
+```
+
+
+Channel contrbution volume and ROIs
+```{r}
+channel_metrics(model_decomps)
+```
+
+Plot ROIs
+```{r}
+plot_roi(model_decomps)
+```
+
+# Response Curves
+
+Generate reponse from model decomposition
+```{r}
+response <- response_curves(model_decomps)
+```
+
+Visualize response curves
+```{r}
+plot_response_curves(response)
+
+```
+
+Estimate mROI and ROI from the response curves
+```{r}
+mroi(response)
+```
+

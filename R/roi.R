@@ -1,8 +1,8 @@
 #' ROI Calculation
 #'
-#'  @param x trained mmm model workflow
-#'  @param new_data impressions data
-#'  @param spend_data spend data
+#'@param x trained mmm model workflow
+#'@param new_data impressions data
+#'@param spend_data spend data
 #'
 #'@export
 roi <- function(x, new_data, spend_data){

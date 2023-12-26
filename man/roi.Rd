@@ -6,8 +6,13 @@
 \usage{
 roi(x, new_data, spend_data)
 }
+\arguments{
+\item{x}{trained mmm model workflow}
+
+\item{new_data}{impressions data}
+
+\item{spend_data}{spend data}
+}
 \description{
-@param x trained mmm model workflow
- @param new_data impressions data
- @param spend_data spend data
+ROI Calculation
 }

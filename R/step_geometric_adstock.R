@@ -50,7 +50,7 @@ step_geometric_adstock <- function(
 }
 
 
-#'@exportS3Method recipes::prep
+#'@export
 prep.step_geometric_adstock <- function(x, training, info = NULL, ...) {
   col_names <- recipes::recipes_eval_select(x$terms, training, info)
   recipes::check_type(training[, col_names], types = c("double", "integer"))
@@ -81,7 +81,7 @@ step_geometric_adstock_new <- function(terms, role, trained, decay, max_carryove
   )
 }
 
-#'@exportS3Method recipes::bake
+#'@export
 bake.step_geometric_adstock <- function(object, new_data, ...) {
   col_names <- names(object$columns)
   recipes::check_new_data(col_names, object, new_data)
@@ -112,7 +112,7 @@ get_geometric_adstock <- function(x, args = NULL) {
   res
 }
 
-#'@exportS3Method generics::tunable
+#'@export
 tunable.step_geometric_adstock <- function (x, ...) {
   tibble::tibble(
     name = c("decay","max_carryover"),

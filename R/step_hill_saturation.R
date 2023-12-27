@@ -56,7 +56,8 @@ step_hill_saturation <- function(
 }
 
 
-#' @exportS3Method recipes::prep
+## #' @exportS3Method recipes::prep
+#' @export
 prep.step_hill_saturation<- function(x, training, info = NULL, ...) {
   col_names <- recipes::recipes_eval_select(x$terms, training, info)
   recipes::check_type(training[, col_names], types = c("double", "integer"))
@@ -91,7 +92,7 @@ step_hill_saturation_new <- function(terms, role, trained, half_saturation, shap
   )
 }
 
-#' @exportS3Method recipes::bake
+#' @export
 bake.step_hill_saturation <- function(object, new_data, ...) {
   col_names <- names(object$columns)
   recipes::check_new_data(col_names, object, new_data)
@@ -123,7 +124,7 @@ get_hill_saturation <- function(x, args = NULL) {
   res
 }
 
-#' @exportS3Method generics::tunable
+#' @export
 tunable.step_hill_saturation<- function (x, ...) {
   tibble::tibble(
     name = c("shape", "nu"),

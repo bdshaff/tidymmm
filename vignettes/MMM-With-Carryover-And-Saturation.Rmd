@@ -26,6 +26,7 @@ library(parsnip)
 library(tibble)
 library(broom.mixed)
 library(ggsci)
+library(rstanarm)
 
 library(tidymmm)
 data(mmm_imps)

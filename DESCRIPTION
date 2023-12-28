@@ -16,6 +16,7 @@ Suggests:
     knitr,
     parsnip,
     broom.mixed,
+    rstanarm,
     rmarkdown,
     testthat (>= 3.0.0)
 Config/testthat/edition: 3

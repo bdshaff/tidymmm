@@ -1,8 +1,8 @@
-#' user step function that tackes the recipe and adds to it
+#'Generate Response Curves
 #'
-#'  @param model_decomp model decomposition table
+#'@param model_decomp model decomposition table/s
 #'
-#' @export
+#'@export
 response_curves <- function(model_decomp){
   saturation_parameters <- saturation_params(model_decomps)
 

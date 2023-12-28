@@ -24,28 +24,23 @@ library(recipes)
 library(workflows)
 library(parsnip)
 library(tibble)
+library(ggsci)
+library(broom.mixed)
 
 library(tidymmm)
 data(mmm_imps)
 data(mmm_spend)
 ```
 
-## Additional Packages
-
-```{r}
-# library(ggsci)
-# library(broom.mixed)
-```
-
 # Data
 
 Impressions Data
 ```{r}
-head(mmm_imps)
+glimpse(mmm_imps)
 ```
 Spend Data
 ```{r}
-head(mmm_spend)
+glimpse(mmm_spend)
 ```
 
 # Model Recipes
@@ -114,34 +109,34 @@ cs_tuned_wflow <-
 # Fitting Models / Running Workflows
 
 ```{r}
-# ln_init_fit <- ln_init_wflow |> fit(data = mmm_imps)
-# cs_init_fit <- cs_init_wflow |> fit(data = mmm_imps)
-# cs_tuned_fit <- cs_tuned_wflow |> fit(data = mmm_imps)
+ln_init_fit <- ln_init_wflow |> fit(data = mmm_imps)
+cs_init_fit <- cs_init_wflow |> fit(data = mmm_imps)
+cs_tuned_fit <- cs_tuned_wflow |> fit(data = mmm_imps)
 ```
 
 ## Use `tidy` to extract fitted parameters
 
 ```{r}
-# tidy(ln_init_fit, conf.int = TRUE)
-# tidy(cs_init_fit, conf.int = TRUE)
-# tidy(cs_tuned_fit, conf.int = TRUE)
+tidy(ln_init_fit, conf.int = TRUE)
+tidy(cs_init_fit, conf.int = TRUE)
+tidy(cs_tuned_fit, conf.int = TRUE)
 ```
 
 # Post-Modeling
 
 Named List of trained models
 ```{r}
-# models <- list(
-#   ln_init_fit = ln_init_fit,
-#   cs_init_fit = cs_init_fit,
-#   cs_tuned_fit = cs_tuned_fit
-#   )
+models <- list(
+  ln_init_fit = ln_init_fit,
+  cs_init_fit = cs_init_fit,
+  cs_tuned_fit = cs_tuned_fit
+  )
 ```
 
 ## Model Decomposition
 ```{r, message=FALSE, warning=FALSE}
-# model_decomps <- decompose(models, new_data = mmm_imps, spend_data = mmm_spend)
-# model_decomps
+model_decomps <- decompose(models, new_data = mmm_imps, spend_data = mmm_spend)
+model_decomps
 ```
 
 ## Model Metrics & Fit

@@ -5,10 +5,6 @@ vignette: >
   %\VignetteIndexEntry{MMM-With-Carryover-And-Saturation}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
-  %\VignetteDepends{tidymodels}
-  %\VignetteDepends{tidyverse}
-  %\VignetteDepends{ggsci}
-  %\VignetteDepends{broom.mixed}
 ---
 
 ```{r, include = FALSE}
@@ -24,7 +20,11 @@ knitr::opts_chunk$set(
 # Packages
 
 ```{r setup}
-library(tidymodels)
+library(recipes)
+library(workflows)
+library(parsnip)
+library(tibble)
+
 library(tidymmm)
 data(mmm_imps)
 data(mmm_spend)
@@ -33,7 +33,6 @@ data(mmm_spend)
 ## Additional Packages
 
 ```{r}
-# library(tidyverse)
 # library(ggsci)
 # library(broom.mixed)
 ```

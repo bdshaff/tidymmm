@@ -16,7 +16,7 @@ plot_model_fit <- function(model_decomp){
     dplyr::select(model, !!temp_sym, !!kpi_sym) |>
     dplyr::distinct() |>
     dplyr::bind_cols(
-      model_decomps |>
+      model_decomp |>
         tidyr::unnest(cols = c(model, pred)) |>
         dplyr::select(.pred)
     ) |>

@@ -24,8 +24,8 @@ library(recipes)
 library(workflows)
 library(parsnip)
 library(tibble)
-library(ggsci)
 library(broom.mixed)
+library(ggsci)
 
 library(tidymmm)
 data(mmm_imps)
@@ -84,7 +84,7 @@ cs_tuned_mmm <-
 
 # Setup Workflows
 
-Using the same linear regression with the Bayesian estimation engine `stan` from `rstanarm` package.
+Using the same linear regression with the Bayesian estimation engine.
 
 ```{r}
 lm_mod <- linear_reg() |> set_engine("stan")
@@ -141,11 +141,11 @@ model_decomps
 
 ## Model Metrics & Fit
 ```{r}
-# model_metrics(model_decomps, new_data = mmm_imps)
+model_metrics(model_decomps, new_data = mmm_imps)
 ```
 
 ```{r}
-# plot_model_fit(model_decomps)
+plot_model_fit(model_decomps)
 ```
 
 
@@ -153,35 +153,36 @@ model_decomps
 
 Contribution percent breakdown
 ```{r}
-# plot_base_contribution(model_decomps)
-# plot_channel_contribution(model_decomps)
+plot_base_contribution(model_decomps)
+plot_channel_contribution(model_decomps)
 ```
 
 
 Channel contrbution volume and ROIs
 ```{r}
-# channel_metrics(model_decomps)
+channel_metrics(model_decomps)
 ```
 
 Plot ROIs
 ```{r}
-# plot_roi(model_decomps)
+plot_roi(model_decomps)
 ```
 
 # Response Curves
 
 Generate reponse from model decomposition
 ```{r}
-# response <- response_curves(model_decomps)
+response <- response_curves(model_decomps)
+response
 ```
 
 Visualize response curves
 ```{r}
-# plot_response_curves(response)
+plot_response_curves(response)
 ```
 
 Estimate mROI and ROI from the response curves
 ```{r}
-# mroi(response)
+mroi(response)
 ```
 

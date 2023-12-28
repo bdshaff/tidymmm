@@ -4,7 +4,7 @@
 #'
 #'@export
 response_curves <- function(model_decomp){
-  saturation_parameters <- saturation_params(model_decomps)
+  saturation_parameters <- saturation_params(model_decomp)
 
   mid_point_x <-
     mmm_spend |>
@@ -14,7 +14,7 @@ response_curves <- function(model_decomp){
     stats::setNames(c("var","mid_point_x"))
 
   mid_point_y <-
-    model_decomps |>
+    model_decomp |>
     tidyr::unnest(decomp) |>
     dplyr::group_by(model, var = term) |>
     dplyr::summarise(mid_point_y = sum(contrib_adj))

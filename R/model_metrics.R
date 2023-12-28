@@ -9,7 +9,7 @@ model_metrics <- function(model_decomp, new_data){
   model_metrics <-
     model_decomp$workflow |>
     tibble::enframe() |>
-    dplyr::mutate(name = model_decomps$model) |>
+    dplyr::mutate(name = model_decomp$model) |>
     dplyr::mutate(
       metrics = purrr::map(
         value, ~generics::augment(.x, new_data = new_data) |>

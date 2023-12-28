@@ -5,15 +5,10 @@ vignette: >
   %\VignetteIndexEntry{MMM-With-Carryover-And-Saturation}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
----
-
----
-title: "MMM-With-Carryover-And-Saturation"
-output: rmarkdown::html_vignette
-vignette: >
-  %\VignetteIndexEntry{MMM-With-Carryover-And-Saturation}
-  %\VignetteEngine{knitr::rmarkdown}
-  %\VignetteEncoding{UTF-8}
+  %\VignetteDepends{tidymodels}
+  %\VignetteDepends{tidyverse}
+  %\VignetteDepends{ggsci}
+  %\VignetteDepends{broom.mixed}
 ---
 
 ```{r, include = FALSE}
@@ -38,20 +33,20 @@ data(mmm_spend)
 ## Additional Packages
 
 ```{r}
-library(tidyverse)
-library(ggsci)
-library(broom.mixed)
+# library(tidyverse)
+# library(ggsci)
+# library(broom.mixed)
 ```
 
 # Data
 
 Impressions Data
 ```{r}
-glimpse(mmm_imps)
+head(mmm_imps)
 ```
 Spend Data
 ```{r}
-glimpse(mmm_spend)
+head(mmm_spend)
 ```
 
 # Model Recipes

@@ -7,6 +7,15 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
+---
+title: "MMM-With-Carryover-And-Saturation"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{MMM-With-Carryover-And-Saturation}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
 ```{r, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,

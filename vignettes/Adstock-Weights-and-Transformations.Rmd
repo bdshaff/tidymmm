@@ -1,0 +1,151 @@
+---
+title: "Adstock-Weights-and-Transformations"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Adstock-Weights-and-Transformations}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.width = 8,
+  fig.height = 6,
+  message = FALSE,
+  warning = FALSE
+)
+```
+
+```{r echo=FALSE}
+library(tidymmm)
+library(purrr)
+library(tidyr)
+library(ggplot2)
+library(forcats)
+library(tibble)
+library(dplyr)
+```
+
+# Geometric Adstock Weights
+
+## Varibale Decay Rate 
+
+```{r echo=FALSE}
+max_carryover <- 5
+sample_decay_rates <- round((seq(0.1, 0.95, length.out = 12))^2, 2)
+weights <- map(
+  sample_decay_rates, 
+  ~geometric_adstock_weights(
+    decay = .x,
+    max_carryover = max_carryover
+    )
+  )
+names(weights) <- sample_decay_rates
+
+weights_df <- 
+  enframe(weights) %>%
+  unnest() %>%
+  setNames(c("decay_rate","weights"))
+
+weights_df %>%
+  ggplot(aes(x = rep(1:max_carryover,12), weights, fill = decay_rate)) +
+  geom_col() +
+  facet_wrap(decay_rate~.) +
+  theme_bw() +
+  labs(title = "Geometric Adstock Weights ~ Decay Rate", x = "")
+```
+
+## Variable Maximum Carryover
+
+```{r echo=FALSE}
+decay_rate <- 0.5
+sample_max_carryover <- 1:12
+weights <- map(
+  sample_max_carryover, 
+  ~c(geometric_adstock_weights(
+     decay = decay_rate,
+     max_carryover = .x), 
+     rep(0, 12-.x))
+  )
+
+names(weights) <- sample_max_carryover
+
+weights_df <- 
+  enframe(weights) %>%
+  unnest() %>%
+  setNames(c("max_carryover","weights")) %>%
+  mutate(max_carryover = fct_reorder(max_carryover, as.numeric(max_carryover), sum))
+
+
+weights_df %>%
+  ggplot(aes(x = rep(1:12, times = 12), weights, fill = max_carryover)) +
+  geom_col() +
+  facet_wrap(max_carryover~.) +
+  theme_bw() +
+  labs(title = "Geometric Adstock Weights ~ Maximum Carryover", x = "")
+```
+
+# Adstock Transformations
+
+## Variable Decay Rate
+
+```{r echo=FALSE}
+x <- mmm_imps$mi_banners
+max_carryover <- 5
+sample_decay_rates <- round((seq(0.1, 0.95, length.out = 5))^2, 2)
+
+x_trans <- map_dfc(
+  sample_decay_rates, 
+  ~geometric_adstock(
+    x,
+    decay = .x,
+    max_carryover = max_carryover
+  )
+)
+
+colnames(x_trans) <- paste0("decay_rate:", sample_decay_rates)
+
+mmm_imps %>%
+  select(Date, x = mi_banners) %>%
+  bind_cols(x_trans) %>%
+  head(21) %>%
+  pivot_longer(-Date, names_to = "decay", values_to = "x") %>%
+  ggplot(aes(Date, x, color = decay)) +
+  geom_line(alpha = 0.8) +
+  facet_wrap(decay ~.) +
+  theme_bw() +
+  labs(title = "Geometric Adstock Transformation ~ Decay Rate", x = "")
+```
+
+## Varibale Maximum Carryover
+
+```{r echo=FALSE}
+x <- mmm_imps$mi_banners
+decay_rate <- 0.6
+sample_max_carryover <- seq(1, 12, by = 2)
+
+x_trans <- map_dfc(
+  sample_max_carryover, 
+  ~geometric_adstock(
+    x,
+    decay = decay_rate,
+    max_carryover = .x
+  )
+)
+
+colnames(x_trans) <- paste0("max_carryover:", sample_max_carryover)
+
+mmm_imps %>%
+  select(Date, x = mi_banners) %>%
+  bind_cols(x_trans) %>%
+  head(21) %>%
+  pivot_longer(-Date, names_to = "max_carryover", values_to = "x") %>%
+  ggplot(aes(Date, x, color = max_carryover)) +
+  geom_line(alpha = 0.8) +
+  facet_wrap(max_carryover ~.) +
+  theme_bw() +
+  labs(title = "Geometric Adstock Transformation ~ Maximum Carryover", x = "")
+```
+

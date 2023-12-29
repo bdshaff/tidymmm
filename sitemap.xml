@@ -10,10 +10,16 @@
     <loc>https://bdshaff.github.io/tidymmm/LICENSE.html</loc>
   </url>
   <url>
+    <loc>https://bdshaff.github.io/tidymmm/articles/Adstock-Weights-and-Transformations.html</loc>
+  </url>
+  <url>
     <loc>https://bdshaff.github.io/tidymmm/articles/MMM-With-Carryover-And-Saturation.html</loc>
   </url>
   <url>
     <loc>https://bdshaff.github.io/tidymmm/articles/index.html</loc>
+  </url>
+  <url>
+    <loc>https://bdshaff.github.io/tidymmm/articles/vignettes-Adstock-Weights-and-Transformations-Rmd.html</loc>
   </url>
   <url>
     <loc>https://bdshaff.github.io/tidymmm/authors.html</loc>

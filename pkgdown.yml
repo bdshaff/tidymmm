@@ -2,8 +2,10 @@ pandoc: 2.19.2
 pkgdown: 2.0.7
 pkgdown_sha: ~
 articles:
+  Adstock-Weights-and-Transformations: Adstock-Weights-and-Transformations.html
   MMM-With-Carryover-And-Saturation: MMM-With-Carryover-And-Saturation.html
-last_built: 2023-12-28T22:01Z
+  vignettes-Adstock-Weights-and-Transformations-Rmd: vignettes-Adstock-Weights-and-Transformations-Rmd.html
+last_built: 2023-12-29T17:07Z
 urls:
   reference: https://bdshaff.github.io/tidymmm/reference
   article: https://bdshaff.github.io/tidymmm/articles

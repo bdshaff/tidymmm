@@ -18,7 +18,12 @@
 #'@export
 
 geometric_adstock_weights = function(decay = 0.5, max_carryover = 12, normalize = TRUE){
-  s = seq(1, max_carryover)
+
+  stopifnot(max_carryover > 0)
+  stopifnot(decay < 1)
+  stopifnot(decay > 0)
+
+  s = seq(1, max_carryover) - 1
   w = decay^s
 
   if(normalize){

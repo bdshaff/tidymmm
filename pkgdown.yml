@@ -4,8 +4,7 @@ pkgdown_sha: ~
 articles:
   Adstock-Weights-and-Transformations: Adstock-Weights-and-Transformations.html
   MMM-With-Carryover-And-Saturation: MMM-With-Carryover-And-Saturation.html
-  vignettes-Adstock-Weights-and-Transformations-Rmd: vignettes-Adstock-Weights-and-Transformations-Rmd.html
-last_built: 2023-12-29T17:07Z
+last_built: 2023-12-30T17:04Z
 urls:
   reference: https://bdshaff.github.io/tidymmm/reference
   article: https://bdshaff.github.io/tidymmm/articles

@@ -30,7 +30,42 @@ library(dplyr)
 
 # Geometric Adstock Weights
 
-## Varibale Decay Rate 
+$$
+w(\theta,l) = \theta^l, l \in[0,L-1], 0<\theta<1
+$$
+
+```{r}
+a <- geometric_adstock_weights(decay = 0.1, max_carryover = 5)
+b <- geometric_adstock_weights(decay = 0.9, max_carryover = 8)
+```
+
+`normalize` is set to `TRUE` by defaul so the sum of the weights will be `1`.
+```{r}
+sum(a)
+sum(b)
+```
+
+the length of the result will equal to `max_carryover` - that is the function of the parameter
+
+```{r}
+length(a)
+length(b)
+```
+
+
+Setting `normalize = FALSE` will return unscaled weights
+```{r}
+a <- geometric_adstock_weights(decay = 0.2, normalize = FALSE)
+b <- geometric_adstock_weights(decay = 0.2)
+```
+
+```{r}
+sum(a) #] not normalized
+sum(b) #] normalized
+```
+
+
+## Changing the Decay Rate
 
 ```{r echo=FALSE}
 max_carryover <- 5
@@ -54,10 +89,39 @@ weights_df %>%
   geom_col() +
   facet_wrap(decay_rate~.) +
   theme_bw() +
-  labs(title = "Geometric Adstock Weights ~ Decay Rate", x = "")
+  labs(title = "Geometric Adstock Weights ~ Decay Rate", x = "",
+       subtitle = "Normalized")
 ```
 
-## Variable Maximum Carryover
+```{r echo=FALSE}
+max_carryover <- 5
+sample_decay_rates <- round((seq(0.1, 0.95, length.out = 12))^2, 2)
+weights <- map(
+  sample_decay_rates, 
+  ~geometric_adstock_weights(
+    decay = .x,
+    max_carryover = max_carryover,
+    normalize = FALSE
+    )
+  )
+names(weights) <- sample_decay_rates
+
+weights_df <- 
+  enframe(weights) %>%
+  unnest() %>%
+  setNames(c("decay_rate","weights"))
+
+weights_df %>%
+  ggplot(aes(x = rep(1:max_carryover,12), weights, fill = decay_rate)) +
+  geom_col() +
+  facet_wrap(decay_rate~.) +
+  theme_bw() +
+  labs(title = "Geometric Adstock Weights ~ Decay Rate", x = "",
+       subtitle = "Non Normalized")
+```
+
+
+## Changing Maximum Carryover
 
 ```{r echo=FALSE}
 decay_rate <- 0.5
@@ -66,7 +130,8 @@ weights <- map(
   sample_max_carryover, 
   ~c(geometric_adstock_weights(
      decay = decay_rate,
-     max_carryover = .x), 
+     max_carryover = .x
+     ), 
      rep(0, 12-.x))
   )
 
@@ -84,12 +149,13 @@ weights_df %>%
   geom_col() +
   facet_wrap(max_carryover~.) +
   theme_bw() +
-  labs(title = "Geometric Adstock Weights ~ Maximum Carryover", x = "")
+  labs(title = "Geometric Adstock Weights ~ Maximum Carryover", x = "",
+       subtitle = "Normalized")
 ```
 
 # Adstock Transformations
 
-## Variable Decay Rate
+## Changing Decay Rate
 
 ```{r echo=FALSE}
 x <- mmm_imps$mi_banners
@@ -119,7 +185,7 @@ mmm_imps %>%
   labs(title = "Geometric Adstock Transformation ~ Decay Rate", x = "")
 ```
 
-## Varibale Maximum Carryover
+## Changing Maximum Carryover
 
 ```{r echo=FALSE}
 x <- mmm_imps$mi_banners

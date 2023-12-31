@@ -30,16 +30,27 @@ library(dplyr)
 
 # Geometric Adstock Weights
 
+The function for geometric adstock weights has the following form:
+
 $$
-w(\theta,l) = \theta^l, l \in[0,L-1], 0<\theta<1
+w(\theta,l) = \theta^l
 $$
+
+$$
+l \in[0,L-1], 0<\theta<1
+$$
+
+see [Bayesian Methods for Media Mix Modeling with Carryover and Shape Effects](https://research.google/pubs/bayesian-methods-for-media-mix-modeling-with-carryover-and-shape-effects/)
+
+### Normalized
+
+`normalize` is set to `TRUE` by default so the sum of the weights will be `1`.
 
 ```{r}
 a <- geometric_adstock_weights(decay = 0.1, max_carryover = 5)
 b <- geometric_adstock_weights(decay = 0.9, max_carryover = 8)
 ```
 
-`normalize` is set to `TRUE` by defaul so the sum of the weights will be `1`.
 ```{r}
 sum(a)
 sum(b)
@@ -52,8 +63,8 @@ length(a)
 length(b)
 ```
 
-
 Setting `normalize = FALSE` will return unscaled weights
+
 ```{r}
 a <- geometric_adstock_weights(decay = 0.2, normalize = FALSE)
 b <- geometric_adstock_weights(decay = 0.2)
@@ -64,8 +75,9 @@ sum(a) #] not normalized
 sum(b) #] normalized
 ```
 
-
 ## Changing the Decay Rate
+
+Keeping `max_carryover = 5` constant and varying the decay rate shows that a small decay rate leads to a small amount of ad exposure volume being carried over into the future while a large decay rate will carry over more of the exposure volume. The choice for the rate will depend on both the medium/channel/tactic/independent variable being included, as well as the dependent variable. For example *sales of durable goods* like cars or washing machines may require a larger carry over in ad exposure variables than *subscriptions to a streaming service*. Likewise OOH Brand advertising may require a larger decay rate than a digital re-targeting tactics.
 
 ```{r echo=FALSE}
 max_carryover <- 5
@@ -92,6 +104,8 @@ weights_df %>%
   labs(title = "Geometric Adstock Weights ~ Decay Rate", x = "",
        subtitle = "Normalized")
 ```
+
+There is the option of no normalizing the weights however this will lead to ad exposure inflation and applying the adstock transformation to the data. This may make sense to do if contextual it is known that ad exposure for a given channel is unreported - however this is best handled in data preparation rather than modeling and so the default behavior is to normalize the weights.
 
 ```{r echo=FALSE}
 max_carryover <- 5
@@ -120,11 +134,12 @@ weights_df %>%
        subtitle = "Non Normalized")
 ```
 
-
 ## Changing Maximum Carryover
 
+Having seen the effect of changing the decay rate we can now explore the effects of smaller and larger `max_carryover` parameter. We'll keep `decay rate = 0.6`. You can see in the plots that when maximum carryover is set to 1 no carryover will take place. For any decay rate the **normalized** weight will be one. As we increase the maximum carryover there is a visible effect up to around \~7 after which the tail end of the weights becomes very small and thus has a small effect.
+
 ```{r echo=FALSE}
-decay_rate <- 0.5
+decay_rate <- 0.6
 sample_max_carryover <- 1:12
 weights <- map(
   sample_max_carryover, 
@@ -153,9 +168,14 @@ weights_df %>%
        subtitle = "Normalized")
 ```
 
+
 # Adstock Transformations
 
+Let's now apply these weight to sample data:
+
 ## Changing Decay Rate
+
+When applying the geometric adstock to the data you can see that the higher decay rate has a smoothing effect wherein both the peaks and the troughs of the original data are dampened and lifted. The larger the decay rate the stronger the smoothing.
 
 ```{r echo=FALSE}
 x <- mmm_imps$mi_banners
@@ -183,9 +203,22 @@ mmm_imps %>%
   facet_wrap(decay ~.) +
   theme_bw() +
   labs(title = "Geometric Adstock Transformation ~ Decay Rate", x = "")
+
+mmm_imps %>%
+  select(Date, x = mi_banners) %>%
+  bind_cols(x_trans) %>%
+  head(21) %>%
+  pivot_longer(-Date, names_to = "decay", values_to = "x") %>%
+  ggplot(aes(Date, x, color = decay)) +
+  geom_line(alpha = 0.8) +
+  #facet_wrap(decay ~.) +
+  theme_bw() +
+  labs(title = "Geometric Adstock Transformation ~ Decay Rate", x = "")
 ```
 
 ## Changing Maximum Carryover
+
+As we saw with the weights - the maximum carryover parameter is really a parameter that unlocks the decay rate and allows it to come into full effect. As a result we see that when we keep the dacay rate constant at 0.6 the transformation only kicks in at max carryover \> 1. The impact of changing the maximum carryover then diminishes with virtually no effect between 8-12.
 
 ```{r echo=FALSE}
 x <- mmm_imps$mi_banners
@@ -213,5 +246,14 @@ mmm_imps %>%
   facet_wrap(max_carryover ~.) +
   theme_bw() +
   labs(title = "Geometric Adstock Transformation ~ Maximum Carryover", x = "")
-```
 
+mmm_imps %>%
+  select(Date, x = mi_banners) %>%
+  bind_cols(x_trans) %>%
+  head(21) %>%
+  pivot_longer(-Date, names_to = "max_carryover", values_to = "x") %>%
+  ggplot(aes(Date, x, color = max_carryover)) +
+  geom_line(alpha = 0.8) +
+  theme_bw() +
+  labs(title = "Geometric Adstock Transformation ~ Maximum Carryover", x = "")
+```

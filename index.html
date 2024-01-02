@@ -80,9 +80,50 @@
 </h2>
 <p>This package has two main objectives</p>
 <ol style="list-style-type: decimal">
-<li>Extend the tidymodels modeling framework with processioning steps required for MMM</li>
-<li>Provide pre/post modeling tools for MMM/MMO projects</li>
+<li>Extend the tidymodels modeling framework with processioning steps required for MMM
+<ol style="list-style-type: decimal">
+<li>Adstock &amp; Carryover Transformations</li>
+<li>Saturation</li>
 </ol>
+</li>
+<li>Provide pre/post modeling tools for MMM/MMO projects.
+<ol style="list-style-type: decimal">
+<li>Model Evaluation</li>
+<li>Model Tuning</li>
+<li>Media/Marketing Optimization</li>
+<li>Visualizations</li>
+</ol>
+</li>
+</ol>
+</div>
+<div class="section level2">
+<h2 id="why-tidymodels-and-tidymmm">Why Tidymodels and Tidymmm<a class="anchor" aria-label="anchor" href="#why-tidymodels-and-tidymmm"></a>
+</h2>
+<p>Tidymmm takes inspiration from</p>
+<ul>
+<li>
+<p>A few great projects that have been developed in the recent past (see related work below).</p>
+<ul>
+<li><p>Modeling methodology and design from these projects (and research behind them) are used as inspiration, however there is no objective of re-implementing thier exact functionality.</p></li>
+<li><p>The biggest difference is that tidymmm aims to provide modelers with felexible tools (a la tidymodels philosophy) and not lock users into a specific method. The disadvantage is that tidymmm is less automated out the box, but on the other hand has all the flexibility that comes with tidymodels.</p></li>
+</ul>
+</li>
+<li>
+<p>The Tidymodels infrastructure in the form of packages like <code>parsnip</code> (modeling), <code>recipes</code> (data prepossessing), <code>tune</code> (hyper-parameter optimization), <code>workflows</code> (combining everything together).</p>
+<ul>
+<li>The aim of tidymmm is to expend and tap into these tools + provide MMM specific tools implemented the tidy-way.</li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section level2">
+<h2 id="related-work">Related Work<a class="anchor" aria-label="anchor" href="#related-work"></a>
+</h2>
+<ul>
+<li><p><a href="https://github.com/google/lightweight_mmm/tree/main?tab=readme-ov-file" class="external-link">LightweightMMM by Google</a></p></li>
+<li><p><a href="https://github.com/facebookexperimental/Robyn" class="external-link">Robyn by Meta</a></p></li>
+<li><p><a href="https://www.pymc-marketing.io/en/stable/guide/mmm/comparison.html" class="external-link">PyMC-Marketing by PyMC Labs</a></p></li>
+</ul>
 </div>
 </div>
   </main><aside class="col-md-3"><div class="license">

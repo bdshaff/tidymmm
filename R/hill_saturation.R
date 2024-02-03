@@ -28,6 +28,8 @@
 #'@export
 hill_saturation <- function(x, half_saturation = NULL, shape = NULL, nu = 1, max_ref = FALSE){
 
+  nu = 1 #] set nu = 1 for now
+
   if(is.null(half_saturation)){
     half_saturation <- mean(x, na.rm = TRUE)
   }

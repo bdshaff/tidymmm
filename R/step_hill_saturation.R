@@ -8,7 +8,7 @@
 #' @param trained A logical to indicate if the quantities for preprocessing have been estimated.
 #' @param half_saturation Half Saturation of the hill saturation transformation
 #' @param shape shape parameter of the hill saturation transformation
-#' @param nu nu parameter of the hill saturation transformation
+#' @param nu nu parameter
 #' @param max_ref A logical. Should the data be scaled back to the original scale.
 #' @param columns A character string of the selected variable names. This field is a placeholder and will be populated once prep() is used.
 #' @param skip A logical. Should the step be skipped when the recipe is baked by bake()? While all operations are baked when prep() is run, some operations may not be able to be conducted on new data (e.g. processing the outcome variable(s)). Care should be taken when using skip = TRUE as it may affect the computations for subsequent operations.

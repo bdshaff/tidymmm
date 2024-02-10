@@ -2,10 +2,13 @@
 % Please edit documentation in R/response_curves.R
 \name{response_curves}
 \alias{response_curves}
-\title{user step function that tackes the recipe and adds to it}
+\title{Generate Response Curves}
 \usage{
 response_curves(model_decomp)
 }
+\arguments{
+\item{model_decomp}{model decomposition table/s}
+}
 \description{
-@param model_decomp model decomposition table
+Generate Response Curves
 }

@@ -62,7 +62,9 @@ cs_init_mmm <-
   add_role(c(mi_tv, mi_radio, mi_banners), new_role = "mi") |>
   update_role(Date, new_role = "temp") |>
   update_role_requirements("temp", bake = FALSE) |>
-  step_geometric_adstock(c(mi_banners, mi_tv, mi_radio)) |>
+  step_geometric_adstock(mi_banners) |>
+  step_geometric_adstock(mi_tv) |>
+  step_geometric_adstock(mi_radio) |>
   step_hill_saturation(mi_banners, max_ref = TRUE) |>
   step_hill_saturation(mi_tv, max_ref = TRUE) |>
   step_hill_saturation(mi_radio, max_ref = TRUE)

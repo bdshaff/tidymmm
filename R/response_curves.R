@@ -4,7 +4,7 @@
 #'
 #'@export
 response_curves <- function(model_decomp){
-  saturation_parameters <- saturation_params(model_decomp)
+  saturation_parameters <- extract_params(model_decomp, type = "step_hill_saturation")
 
   mid_point_x <-
     mmm_spend |>

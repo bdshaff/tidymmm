@@ -31,7 +31,7 @@ step_hill_saturation(
 
 \item{shape}{shape parameter of the hill saturation transformation}
 
-\item{nu}{nu parameter of the hill saturation transformation}
+\item{nu}{nu parameter}
 
 \item{max_ref}{A logical. Should the data be scaled back to the original scale.}
 

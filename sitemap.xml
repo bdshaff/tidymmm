@@ -43,6 +43,9 @@
     <loc>https://bdshaff.github.io/tidymmm/reference/delayed_adstock_weights.html</loc>
   </url>
   <url>
+    <loc>https://bdshaff.github.io/tidymmm/reference/extract_params.html</loc>
+  </url>
+  <url>
     <loc>https://bdshaff.github.io/tidymmm/reference/geometric_adstock.html</loc>
   </url>
   <url>
@@ -80,9 +83,6 @@
   </url>
   <url>
     <loc>https://bdshaff.github.io/tidymmm/reference/roi.html</loc>
-  </url>
-  <url>
-    <loc>https://bdshaff.github.io/tidymmm/reference/saturation_params.html</loc>
   </url>
   <url>
     <loc>https://bdshaff.github.io/tidymmm/reference/step_geometric_adstock.html</loc>

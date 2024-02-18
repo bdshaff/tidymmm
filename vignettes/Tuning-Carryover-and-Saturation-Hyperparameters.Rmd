@@ -1,0 +1,150 @@
+---
+title: "Tuning-Carryover-and-Saturation-Hyperparameters"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Tuning-Carryover-and-Saturation-Hyperparameters}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.width = 8,
+  fig.height = 6,
+  message = FALSE,
+  warning = FALSE
+)
+```
+
+# Loading Libraries & Data
+
+```{r echo=FALSE}
+library(tidyverse)
+library(tidymodels)
+library(tidymmm)
+
+data(mmm_imps)
+data(mmm_spend)
+```
+
+# Tunable Recipe
+
+A big advantage of using tydymmm and a major motivation for following the tydymodels framework is the set of tools for hyperparameter tuning. Seting up a tunable model is made easy using the `tune` function. For each parameter that we want to tune we instead of hardcoding a value we set to `tune(name_of_the_parameter)`. Make sure that the names are distinct.
+
+```{r}
+m_recipe <-
+  recipe(kpi_sales ~ ., data = mmm_imps) |>
+  add_role(c(mi_tv, mi_radio, mi_banners), new_role = "mi") |>
+  update_role(Date, new_role = "temp") %>%
+  update_role_requirements("temp", bake = FALSE) |>
+  
+  #here we will tune the decay rate for banner but hard code max_carryover to 1 i.e. no carryover
+  step_geometric_adstock(mi_banners, decay = tune("banners_decay"), max_carryover = 1) |>
+  
+  # we will also tune the shape parameter of the hill saturation function
+  step_hill_saturation(mi_banners, shape = tune("banners_shape"), max_ref = TRUE) |>
+  
+  # for tv we will also tune the max carryover
+  step_geometric_adstock(mi_tv, decay = tune("tv_decay"), max_carryover = tune("tv_max_carryover")) |>
+  step_hill_saturation(mi_tv, shape = tune("tv_shape"), max_ref = TRUE) |>
+  step_geometric_adstock(mi_radio, decay = tune("radio_decay"), max_carryover = tune("radio_max_carryover")) |>
+  step_hill_saturation(mi_radio, shape = tune("radio_shape"), max_ref = TRUE)
+```
+
+
+As a modeler and depending on contextual knowledge you may tune some or all the hyper-parameters of the model. In the example below we set a string assumption that impact on sale from banner ads has no carryover into the future. TV and Radio carryover will be tuned.
+
+We define the model and workflow with the recipe in the usual manner.
+
+```{r}
+m_mod <-
+  linear_reg() |>
+  set_engine("lm")
+
+m_wflow <-
+  workflow() |>
+  add_model(m_mod) |>
+  add_recipe(m_recipe)
+```
+
+# Define a Tuning Grid
+
+This is where we begin to really tap into the tydymeodels framework. To define a grid of parameters over which we will search for an optimal combination we will follow define a random grid over a ranges of hyperparameters. We'll use the `grid_random` function and metric functions provided by tydymmm, `shape`, `max_carryover`, `decay`. These functions can take a range parameter to set the lower and upper limits. Setting a range like this essentially allows for your bias or business domain knowledge to come into play. If an range is not provided a search over the whole domain of the function will be preformed. 
+
+```{r}
+set.seed(007)
+
+rand_grid <-
+  grid_random(
+    decay(range = c(0.01, 0.5)),
+    tv_shape = shape(range = c(0.01, 0.9)),
+    tv_max_carryover = max_carryover(range = c(2 , 8)),
+    banners_decay = decay(range = c(0.01, 0.5)),
+    banners_shape = shape(range = c(1, 2)),
+    radio_decay = decay(range = c(0.01, 0.4)),
+    radio_shape = shape(range = c(1, 2)),
+    radio_max_carryover = max_carryover(range = c(1 , 3)),
+    size = 400
+  ) %>%
+  rename(tv_decay = decay)
+```
+
+For each of the hyperparameters we create a column with the name matching the recipe. To make the search a little quicker we set the max grid size to 1000.
+
+```{r}
+rand_grid
+```
+
+# Tune
+
+Next we'll set a cross-validation scheme with 5 folds and two repetitions. 
+
+```{r}
+folds <- vfold_cv(mmm, v = 5, repeats = 2)
+```
+
+Now we are ready to tune! Pass the workflow to `tune_grid` with the resamples, the grid, and a set of metrics to optimize for. We will search for an optimal MAPE.
+
+```{r, cache=TRUE}
+tuned <- 
+  m_wflow %>% 
+  tune_grid(
+    resamples = folds, 
+    grid = rand_grid, 
+    metrics = metric_set(mape)
+    )
+```
+
+To see the results we'll unwrap the metrics column for each of the models and take the average over the folds and repetitions of our tuning cv scheme.
+
+```{r}
+tn_summary <- 
+  tuned %>%
+  unnest(.metrics) %>%
+  group_by(
+    tv_max_carryover,
+    tv_decay,
+    tv_shape,
+    banners_decay,
+    banners_shape,
+    radio_max_carryover,
+    radio_decay,
+    radio_shape
+    ) %>%
+  summarise(mape = mean(.estimate)) %>%
+  arrange(mape)
+
+tn_summary
+```
+
+Plot average MAPE over a grid of two variables
+
+```{r}
+tn_summary %>%
+  ggplot(aes(tv_decay, tv_shape)) +
+  geom_point(aes(color = mape, size = mape)) +
+  theme_minimal()
+```
+

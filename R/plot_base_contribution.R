@@ -9,7 +9,6 @@ plot_base_contribution <- function(model_decomp){
     tidyr::unnest(decomp) |>
     dplyr::group_by(model, source = dplyr::if_else(term == "base", "base", "mi")) |>
     dplyr::summarise(sales_contribution = sum(contrib_adj)) |>
-    dplyr::ungroup() |>
     dplyr::mutate(total_sales = sum(sales_contribution)) |>
     dplyr::mutate(perent_contribution = sales_contribution/total_sales) |>
     ggplot2::ggplot(ggplot2::aes(model, sales_contribution, fill = source)) +

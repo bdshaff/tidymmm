@@ -8,15 +8,14 @@ plot_base_contribution <- function(model_decomp){
   model_decomp |>
     tidyr::unnest(decomp) |>
     dplyr::group_by(model, source = dplyr::if_else(term == "base", "base", "mi")) |>
-    dplyr::summarise(
-      sales_contribution = sum(contrib_adj),
-      total_sales = sum(kpi_sales)
-    ) |>
+    dplyr::summarise(sales_contribution = sum(contrib_adj)) |>
+    dplyr::ungroup() |>
+    dplyr::mutate(total_sales = sum(sales_contribution)) |>
     dplyr::mutate(perent_contribution = sales_contribution/total_sales) |>
     ggplot2::ggplot(ggplot2::aes(model, sales_contribution, fill = source)) +
     ggplot2::geom_col(position = "stack", alpha = 0.7) +
     ggplot2::geom_text(ggplot2::aes(label = scales::percent(perent_contribution, accuracy = .1)),
-              position = ggplot2::position_stack(vjust = .5)) +
+                       position = ggplot2::position_stack(vjust = .5)) +
     ggsci::scale_fill_aaas()+
     ggplot2::theme_minimal() +
     ggplot2::scale_y_continuous(labels = scales::number) +

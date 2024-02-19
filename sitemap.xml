@@ -16,6 +16,9 @@
     <loc>https://bdshaff.github.io/tidymmm/articles/MMM-With-Carryover-And-Saturation.html</loc>
   </url>
   <url>
+    <loc>https://bdshaff.github.io/tidymmm/articles/Tuning-Carryover-and-Saturation-Hyperparameters.html</loc>
+  </url>
+  <url>
     <loc>https://bdshaff.github.io/tidymmm/articles/index.html</loc>
   </url>
   <url>
@@ -68,6 +71,9 @@
   </url>
   <url>
     <loc>https://bdshaff.github.io/tidymmm/reference/plot_channel_contribution.html</loc>
+  </url>
+  <url>
+    <loc>https://bdshaff.github.io/tidymmm/reference/plot_channel_contribution_month.html</loc>
   </url>
   <url>
     <loc>https://bdshaff.github.io/tidymmm/reference/plot_model_fit.html</loc>

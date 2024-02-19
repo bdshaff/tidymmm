@@ -21,9 +21,18 @@ knitr::opts_chunk$set(
 # Loading Libraries & Data
 
 ```{r echo=FALSE}
-library(tidyverse)
-library(tidymodels)
+library(recipes)
+library(workflows)
+library(parsnip)
+library(tibble)
+library(broom.mixed)
+library(ggsci)
+library(tune)
+
+
 library(tidymmm)
+data(mmm_imps)
+data(mmm_spend)
 
 data(mmm_imps)
 data(mmm_spend)
@@ -107,7 +116,7 @@ folds <- vfold_cv(mmm, v = 5, repeats = 2)
 
 Now we are ready to tune! Pass the workflow to `tune_grid` with the resamples, the grid, and a set of metrics to optimize for. We will search for an optimal MAPE.
 
-```{r, cache=TRUE}
+```{r}
 tuned <- 
   m_wflow %>% 
   tune_grid(

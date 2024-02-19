@@ -161,6 +161,16 @@ plot_channel_contribution(model_decomps)
 ```
 
 
+```{r}
+model_decomps |> 
+  filter(model == "cs_tuned_fit") |> 
+  plot_channel_contribution_month(
+    begin_date = "2021-04-01", 
+    end_date = "2022-01-01"
+    )
+```
+
+
 Channel contrbution volume and ROIs
 ```{r}
 channel_metrics(model_decomps)

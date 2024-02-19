@@ -39,6 +39,7 @@ data(mmm_imps)
 data(mmm_spend)
 ```
 
+
 # Tunable Recipe
 
 A big advantage of using tydymmm and a major motivation for following the tydymodels framework is the set of tools for hyperparameter tuning. Seting up a tunable model is made easy using the `tune` function. For each parameter that we want to tune we instead of hardcoding a value we set to `tune(name_of_the_parameter)`. Make sure that the names are distinct.

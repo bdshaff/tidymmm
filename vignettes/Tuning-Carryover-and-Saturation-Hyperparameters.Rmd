@@ -29,6 +29,7 @@ library(yardstick)
 library(tidyr)
 library(dplyr)
 library(tibble)
+library(purrr)
 library(ggplot2)
 
 library(tidymmm)

@@ -5,7 +5,6 @@
 #' @param end_date maximum date
 #'
 #'@export
-
 plot_channel_contribution_month <- function(model_decomp, begin_date, end_date){
   model_decomps |>
     tidyr::unnest(decomp) |>

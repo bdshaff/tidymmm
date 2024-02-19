@@ -183,7 +183,7 @@ plot_roi(model_decomps)
 
 # Response Curves
 
-Generate reponse from model decomposition
+Generate response from model decomposition
 ```{r}
 response <- response_curves(model_decomps)
 response

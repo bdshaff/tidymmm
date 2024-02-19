@@ -24,11 +24,13 @@ knitr::opts_chunk$set(
 library(recipes)
 library(workflows)
 library(parsnip)
-library(tibble)
-library(broom.mixed)
-library(ggsci)
 library(tune)
-
+library(dials)
+library(rsample)
+library(yardstick)
+library(tidyr)
+library(dplyr)
+library(ggplot2)
 
 library(tidymmm)
 data(mmm_imps)

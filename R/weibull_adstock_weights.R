@@ -16,14 +16,13 @@
 #' weibull_adstock_weights(scale = 1.5, scale = 20)
 #'
 #'@export
-
 weibull_adstock_weights = function(shape = 1, scale = 1, max_carryover = 12, normalize = TRUE){
 
   stopifnot(max_carryover > 0)
   stopifnot(scale > 0)
   stopifnot(shape > 0)
 
-  ww = dweibull(1:max_carryover, shape = shape, scale = scale)
+  ww = stats::dweibull(1:max_carryover, shape = shape, scale = scale)
   ww = (ww - min(ww))/(max(ww) - min(ww))
 
   if(normalize){

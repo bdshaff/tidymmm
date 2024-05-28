@@ -1,4 +1,4 @@
-#'delayed Adstock Transformation
+#'Delayed Adstock Transformation
 #'
 #'step_delayed_adstock() creates a specification of a recipe step that will adstock transform data.
 #'
@@ -71,7 +71,7 @@ prep.step_delayed_adstock <- function(x, training, info = NULL, ...) {
   )
 }
 
-step_delayed_adstock_new <- function(terms, role, trained, decay, max_carryover, columns, skip, id) {
+step_delayed_adstock_new <- function(terms, role, trained, decay, delay, max_carryover, columns, skip, id) {
   recipes::step(
     subclass = "delayed_adstock",
     terms = terms,
@@ -105,6 +105,7 @@ bake.step_delayed_adstock <- function(object, new_data, ...) {
 
 print.step_delayed_adstock <- function(x, width = max(20, options()$width - 31), ...) {
   decay <- x$decay
+  delay <- x$delay
   max_carryover <- x$max_carryover
   msg <- glue::glue("delayed Adstock (decay {decay},delay {delay} maximum carryover {max_carryover})")
   title <- glue::glue("{msg} transformation on ")

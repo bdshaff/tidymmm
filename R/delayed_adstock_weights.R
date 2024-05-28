@@ -16,7 +16,6 @@
 #' delayed_adstock_weights(decay = 0.1, delay = 5)
 #'
 #'@export
-
 delayed_adstock_weights = function(decay = 0.5, delay = 2, max_carryover = 12, normalize = TRUE){
 
   stopifnot(delay < max_carryover)

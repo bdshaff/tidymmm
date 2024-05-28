@@ -6,7 +6,6 @@
 #' @param normalize should weights be normalized
 #'
 #'@export
-
 weibull_adstock <- function(x, shape = 1, scale = 1, max_carryover = 12, normalize = TRUE){
 
   w <- weibull_adstock_weights(shape, scale, max_carryover, normalize)

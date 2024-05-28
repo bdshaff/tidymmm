@@ -30,7 +30,7 @@
 geometric_adstock <- function(x, decay = 0.5, max_carryover = 12, normalize = TRUE){
 
   w <- geometric_adstock_weights(decay, max_carryover, normalize)
-  y <- adstock_w(x, w, max_carryover)
+  y <- convolve_adstock_weights(x, w)
 
   return(y)
 }

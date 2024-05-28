@@ -7,25 +7,10 @@
 #'
 #'@export
 
-
-delayed_adstock_weights = function(decay = 0.5, delay = 2, max_carryover = 12, normalize = TRUE){
-
-  stopifnot(delay < max_carryover)
-
-  s = (seq(1, max_carryover) - delay)^2
-  w = decay^s
-
-  if(normalize){
-    w = w/sum(w)
-  }
-
-  return(w)
-}
-
 delayed_adstock <- function(x, decay = 0.5, delay = 2, max_carryover = 12, normalize = TRUE){
 
   w <- delayed_adstock_weights(decay, delay, max_carryover, normalize)
-  y <- adstock_w(x, w, max_carryover)
+  y <- convolve_adstock_weights(x, w)
 
   return(y)
 }

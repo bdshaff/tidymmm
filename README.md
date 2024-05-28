@@ -6,10 +6,10 @@ Tidy tools and extensions for MMM (Media/Marketing Mix Modeling)
 
 This package has two main objectives
 
-1.  Extend the tidymodels modeling framework with processioning steps required for MMM
+1.  Extend the tidymodels modeling framework with transformation steps required for MMM
     1.  Adstock & Carryover Transformations
     2.  Saturation
-2.  Provide pre/post modeling tools for MMM/MMO projects.
+2.  Provide pre/post modeling tools for MMM projects.
     1.  Model Evaluation
     2.  Model Tuning
     3.  Media/Marketing Optimization

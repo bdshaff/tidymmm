@@ -77,7 +77,8 @@ step_weibull_adstock_new <- function(terms, role, trained, shape, scale, max_car
     terms = terms,
     role = role,
     trained = trained,
-    decay = decay,
+    shape = shape,
+    scale = scale,
     max_carryover = max_carryover,
     columns = columns,
     skip = skip,
@@ -94,7 +95,7 @@ bake.step_weibull_adstock <- function(object, new_data, ...) {
   for (col_name in col_names) {
     tmp <- new_data[[col_name]]
 
-    tmp <- get_weibull_adstock(tmp, list(shape = object$shape, scale = object$scale,, max_carryover = object$max_carryover))
+    tmp <- get_weibull_adstock(tmp, list(shape = object$shape, scale = object$scale, max_carryover = object$max_carryover))
 
     new_data[[col_name]] <- tmp
   }

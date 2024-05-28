@@ -70,6 +70,34 @@ cs_init_mmm <-
   step_hill_saturation(mi_radio, max_ref = TRUE)
 ```
 
+```{r}
+dl_init_mmm <-
+  recipe(kpi_sales ~ ., data = mmm_imps) |>
+  add_role(c(mi_tv, mi_radio, mi_banners), new_role = "mi") |>
+  update_role(Date, new_role = "temp") |>
+  update_role_requirements("temp", bake = FALSE) |>
+  step_delayed_adstock(mi_banners) |>
+  step_delayed_adstock(mi_tv) |>
+  step_delayed_adstock(mi_radio) |>
+  step_hill_saturation(mi_banners, max_ref = TRUE) |>
+  step_hill_saturation(mi_tv, max_ref = TRUE) |>
+  step_hill_saturation(mi_radio, max_ref = TRUE)
+```
+
+```{r}
+wb_init_mmm <-
+  recipe(kpi_sales ~ ., data = mmm_imps) |>
+  add_role(c(mi_tv, mi_radio, mi_banners), new_role = "mi") |>
+  update_role(Date, new_role = "temp") |>
+  update_role_requirements("temp", bake = FALSE) |>
+  step_weibull_adstock(mi_banners) |>
+  step_delayed_adstock(mi_tv) |>
+  step_delayed_adstock(mi_radio) |>
+  step_hill_saturation(mi_banners, max_ref = TRUE) |>
+  step_hill_saturation(mi_tv, max_ref = TRUE) |>
+  step_hill_saturation(mi_radio, max_ref = TRUE)
+```
+
 Recipe with tuned carryover and saturation transformations
 ```{r}
 cs_tuned_mmm <-
@@ -102,6 +130,16 @@ cs_init_wflow <-
   add_model(lm_mod) |>
   add_recipe(cs_init_mmm)
 
+dl_init_wflow <-
+  workflow() |>
+  add_model(lm_mod) |>
+  add_recipe(dl_init_mmm)
+
+wb_init_wflow <-
+  workflow() |>
+  add_model(lm_mod) |>
+  add_recipe(wb_init_mmm)
+
 cs_tuned_wflow <-
   workflow() |>
   add_model(lm_mod) |>
@@ -114,6 +152,8 @@ cs_tuned_wflow <-
 ```{r}
 ln_init_fit <- ln_init_wflow |> fit(data = mmm_imps)
 cs_init_fit <- cs_init_wflow |> fit(data = mmm_imps)
+dl_init_fit <- dl_init_wflow |> fit(data = mmm_imps)
+wb_init_fit <- wb_init_wflow |> fit(data = mmm_imps)
 cs_tuned_fit <- cs_tuned_wflow |> fit(data = mmm_imps)
 ```
 
@@ -122,6 +162,8 @@ cs_tuned_fit <- cs_tuned_wflow |> fit(data = mmm_imps)
 ```{r}
 tidy(ln_init_fit, conf.int = TRUE)
 tidy(cs_init_fit, conf.int = TRUE)
+tidy(dl_init_fit, conf.int = TRUE)
+tidy(wb_init_fit, conf.int = TRUE)
 tidy(cs_tuned_fit, conf.int = TRUE)
 ```
 
@@ -132,6 +174,8 @@ Named List of trained models
 models <- list(
   ln_init_fit = ln_init_fit,
   cs_init_fit = cs_init_fit,
+  dl_init_fit = dl_init_fit,
+  wb_init_fit = wb_init_fit,
   cs_tuned_fit = cs_tuned_fit
   )
 ```

@@ -12,8 +12,8 @@
 #'
 #' @examples
 #' weibull_adstock_weights()
-#' weibull_adstock_weights(scale = 0.5, scale = 10)
-#' weibull_adstock_weights(scale = 1.5, scale = 20)
+#' weibull_adstock_weights(shape = 0.5, scale = 10)
+#' weibull_adstock_weights(shape = 1.5, scale = 20)
 #'
 #'@export
 weibull_adstock_weights = function(shape = 1, scale = 1, max_carryover = 12, normalize = TRUE){

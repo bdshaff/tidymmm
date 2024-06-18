@@ -12,6 +12,7 @@ step_weibull_adstock(
   shape = 1,
   scale = 1,
   max_carryover = 12,
+  normalize = TRUE,
   columns = NULL,
   skip = FALSE,
   id = recipes::rand_id("weibull_adstock")
@@ -31,6 +32,8 @@ step_weibull_adstock(
 \item{scale}{Scale parameter}
 
 \item{max_carryover}{Maximum Carryover parameter for the weibull adstock transformation}
+
+\item{normalize}{Should adstock weights be normalized to sum up to 1}
 
 \item{columns}{A character string of the selected variable names. This field is a placeholder and will be populated once prep() is used.}
 

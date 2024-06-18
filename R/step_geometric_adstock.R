@@ -8,6 +8,7 @@
 #'@param trained A logical to indicate if the quantities for preprocessing have been estimated.
 #'@param decay Decay Rate parameter for the geometric adstock transformation
 #'@param max_carryover Maximum Carryover parameter for the geometric adstock transformation
+#'@param normalize Should adstock weights be normalized to sum up to 1
 #'@param columns A character string of the selected variable names. This field is a placeholder and will be populated once prep() is used.
 #'@param skip A logical. Should the step be skipped when the recipe is baked by bake()? While all operations are baked when prep() is run, some operations may not be able to be conducted on new data (e.g. processing the outcome variable(s)). Care should be taken when using skip = TRUE as it may affect the computations for subsequent operations.
 #'@param id A character string that is unique to this step to identify it
@@ -30,6 +31,7 @@ step_geometric_adstock <- function(
     trained = FALSE,
     decay = 0.5,
     max_carryover = 12,
+    normalize = TRUE,
     columns = NULL,
     skip = FALSE,
     id = recipes::rand_id("geometric_adstock")
@@ -42,6 +44,7 @@ step_geometric_adstock <- function(
       role = role,
       decay = decay,
       max_carryover = max_carryover,
+      normalize = normalize,
       columns = columns,
       skip = skip,
       id = id
@@ -61,13 +64,14 @@ prep.step_geometric_adstock <- function(x, training, info = NULL, ...) {
     trained = TRUE,
     decay = x$decay,
     max_carryover = x$max_carryover,
+    normalize = x$normalize,
     columns = col_names,
     skip = x$skip,
     id = x$id
   )
 }
 
-step_geometric_adstock_new <- function(terms, role, trained, decay, max_carryover, columns, skip, id) {
+step_geometric_adstock_new <- function(terms, role, trained, decay, max_carryover, normalize, columns, skip, id) {
   recipes::step(
     subclass = "geometric_adstock",
     terms = terms,
@@ -75,6 +79,7 @@ step_geometric_adstock_new <- function(terms, role, trained, decay, max_carryove
     trained = trained,
     decay = decay,
     max_carryover = max_carryover,
+    normalize = normalize,
     columns = columns,
     skip = skip,
     id = id
@@ -90,7 +95,11 @@ bake.step_geometric_adstock <- function(object, new_data, ...) {
   for (col_name in col_names) {
     tmp <- new_data[[col_name]]
 
-    tmp <- get_geometric_adstock(tmp, list(decay = object$decay, max_carryover = object$max_carryover))
+    tmp <- get_geometric_adstock(tmp, list(
+      decay = object$decay,
+      max_carryover = object$max_carryover,
+      normalize = object$normalize
+      ))
 
     new_data[[col_name]] <- tmp
   }
@@ -101,7 +110,8 @@ bake.step_geometric_adstock <- function(object, new_data, ...) {
 print.step_geometric_adstock <- function(x, width = max(20, options()$width - 31), ...) {
   decay <- x$decay
   max_carryover <- x$max_carryover
-  msg <- glue::glue("Geometric Adstock (decay {decay}, maximum carryover {max_carryover})")
+  normalize <- x$normalize
+  msg <- glue::glue("Geometric Adstock (decay {decay}, maximum carryover {max_carryover} | normalize={normalize})")
   title <- glue::glue("{msg} transformation on ")
   recipes::print_step(x$columns, x$terms, x$trained, title, width)
   invisible(x)
@@ -127,7 +137,7 @@ tunable.step_geometric_adstock <- function (x, ...) {
 }
 
 #' @export
-decay <- function(range = c(0.01, 0.99), trans = NULL) {
+decay <- function(range = c(0.0001, 0.9999), trans = NULL) {
   dials::new_quant_param(
     type = "double",
     range = range,

@@ -32,12 +32,15 @@ Imports:
     plotly,
     purrr,
     recipes,
+    rsample,
     rlang,
     scales,
     tibble,
     tidyr,
     tidyselect,
     workflows,
-    yardstick
+    yardstick,
+    lubridate,
+    stringr
 URL: https://bdshaff.github.io/tidymmm/
 VignetteBuilder: knitr

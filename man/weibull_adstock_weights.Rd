@@ -29,7 +29,7 @@ that define how media impressions will be decayed in present and carried over in
 }
 \examples{
 weibull_adstock_weights()
-weibull_adstock_weights(scale = 0.5, scale = 10)
-weibull_adstock_weights(scale = 1.5, scale = 20)
+weibull_adstock_weights(shape = 0.5, scale = 10)
+weibull_adstock_weights(shape = 1.5, scale = 20)
 
 }

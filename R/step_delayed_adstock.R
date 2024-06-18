@@ -9,6 +9,7 @@
 #'@param decay Decay Rate parameter for the delayed adstock transformation
 #'@param delay Delay parameter
 #'@param max_carryover Maximum Carryover parameter for the delayed adstock transformation
+#'@param normalize Should adstock weights be normalized to sum up to 1
 #'@param columns A character string of the selected variable names. This field is a placeholder and will be populated once prep() is used.
 #'@param skip A logical. Should the step be skipped when the recipe is baked by bake()? While all operations are baked when prep() is run, some operations may not be able to be conducted on new data (e.g. processing the outcome variable(s)). Care should be taken when using skip = TRUE as it may affect the computations for subsequent operations.
 #'@param id A character string that is unique to this step to identify it
@@ -32,6 +33,7 @@ step_delayed_adstock <- function(
     decay = 0.5,
     delay = 2,
     max_carryover = 12,
+    normalize = TRUE,
     columns = NULL,
     skip = FALSE,
     id = recipes::rand_id("delayed_adstock")
@@ -45,6 +47,7 @@ step_delayed_adstock <- function(
       decay = decay,
       delay = delay,
       max_carryover = max_carryover,
+      normalize = normalize,
       columns = columns,
       skip = skip,
       id = id
@@ -65,13 +68,14 @@ prep.step_delayed_adstock <- function(x, training, info = NULL, ...) {
     decay = x$decay,
     delay = x$delay,
     max_carryover = x$max_carryover,
+    normalize = x$normalize,
     columns = col_names,
     skip = x$skip,
     id = x$id
   )
 }
 
-step_delayed_adstock_new <- function(terms, role, trained, decay, delay, max_carryover, columns, skip, id) {
+step_delayed_adstock_new <- function(terms, role, trained, decay, delay, max_carryover, normalize, columns, skip, id) {
   recipes::step(
     subclass = "delayed_adstock",
     terms = terms,
@@ -80,6 +84,7 @@ step_delayed_adstock_new <- function(terms, role, trained, decay, delay, max_car
     decay = decay,
     delay = delay,
     max_carryover = max_carryover,
+    normalize = normalize,
     columns = columns,
     skip = skip,
     id = id
@@ -95,7 +100,12 @@ bake.step_delayed_adstock <- function(object, new_data, ...) {
   for (col_name in col_names) {
     tmp <- new_data[[col_name]]
 
-    tmp <- get_delayed_adstock(tmp, list(decay = object$decay, delay = object$delay, max_carryover = object$max_carryover))
+    tmp <- get_delayed_adstock(tmp, list(
+      decay = object$decay,
+      delay = object$delay,
+      max_carryover = object$max_carryover,
+      normalize = object$normalize
+      ))
 
     new_data[[col_name]] <- tmp
   }
@@ -107,7 +117,8 @@ print.step_delayed_adstock <- function(x, width = max(20, options()$width - 31),
   decay <- x$decay
   delay <- x$delay
   max_carryover <- x$max_carryover
-  msg <- glue::glue("delayed Adstock (decay {decay},delay {delay} maximum carryover {max_carryover})")
+  normalize <- x$normalize
+  msg <- glue::glue("delayed Adstock (decay {decay},delay {delay} maximum carryover {max_carryover} | normalize={normalize})")
   title <- glue::glue("{msg} transformation on ")
   recipes::print_step(x$columns, x$terms, x$trained, title, width)
   invisible(x)
@@ -136,7 +147,7 @@ tunable.step_delayed_adstock <- function (x, ...) {
 #' @export
 delay <- function(range = c(0, 100), trans = NULL) {
   dials::new_quant_param(
-    type = "double",
+    type = "integer",
     range = range,
     inclusive = c(TRUE, TRUE),
     trans = trans,

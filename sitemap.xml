@@ -1,123 +1,43 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url>
-    <loc>https://bdshaff.github.io/tidymmm/404.html</loc>
-  </url>
-  <url>
-    <loc>https://bdshaff.github.io/tidymmm/LICENSE-text.html</loc>
-  </url>
-  <url>
-    <loc>https://bdshaff.github.io/tidymmm/LICENSE.html</loc>
-  </url>
-  <url>
-    <loc>https://bdshaff.github.io/tidymmm/articles/Adstock-Weights-and-Transformations.html</loc>
-  </url>
-  <url>
-    <loc>https://bdshaff.github.io/tidymmm/articles/MMM-With-Carryover-And-Saturation.html</loc>
-  </url>
-  <url>
-    <loc>https://bdshaff.github.io/tidymmm/articles/Tuning-Carryover-and-Saturation-Hyperparameters.html</loc>
-  </url>
-  <url>
-    <loc>https://bdshaff.github.io/tidymmm/articles/index.html</loc>
-  </url>
-  <url>
-    <loc>https://bdshaff.github.io/tidymmm/authors.html</loc>
-  </url>
-  <url>
-    <loc>https://bdshaff.github.io/tidymmm/index.html</loc>
-  </url>
-  <url>
-    <loc>https://bdshaff.github.io/tidymmm/news/index.html</loc>
-  </url>
-  <url>
-    <loc>https://bdshaff.github.io/tidymmm/reference/adstock_w.html</loc>
-  </url>
-  <url>
-    <loc>https://bdshaff.github.io/tidymmm/reference/channel_metrics.html</loc>
-  </url>
-  <url>
-    <loc>https://bdshaff.github.io/tidymmm/reference/contrib_decomp.html</loc>
-  </url>
-  <url>
-    <loc>https://bdshaff.github.io/tidymmm/reference/convolve_adstock_weights.html</loc>
-  </url>
-  <url>
-    <loc>https://bdshaff.github.io/tidymmm/reference/decompose.html</loc>
-  </url>
-  <url>
-    <loc>https://bdshaff.github.io/tidymmm/reference/delayed_adstock.html</loc>
-  </url>
-  <url>
-    <loc>https://bdshaff.github.io/tidymmm/reference/delayed_adstock_weights.html</loc>
-  </url>
-  <url>
-    <loc>https://bdshaff.github.io/tidymmm/reference/extract_params.html</loc>
-  </url>
-  <url>
-    <loc>https://bdshaff.github.io/tidymmm/reference/geometric_adstock.html</loc>
-  </url>
-  <url>
-    <loc>https://bdshaff.github.io/tidymmm/reference/geometric_adstock_weights.html</loc>
-  </url>
-  <url>
-    <loc>https://bdshaff.github.io/tidymmm/reference/hill_saturation.html</loc>
-  </url>
-  <url>
-    <loc>https://bdshaff.github.io/tidymmm/reference/index.html</loc>
-  </url>
-  <url>
-    <loc>https://bdshaff.github.io/tidymmm/reference/model_metrics.html</loc>
-  </url>
-  <url>
-    <loc>https://bdshaff.github.io/tidymmm/reference/mroi.html</loc>
-  </url>
-  <url>
-    <loc>https://bdshaff.github.io/tidymmm/reference/plot_base_contribution.html</loc>
-  </url>
-  <url>
-    <loc>https://bdshaff.github.io/tidymmm/reference/plot_channel_contribution.html</loc>
-  </url>
-  <url>
-    <loc>https://bdshaff.github.io/tidymmm/reference/plot_channel_contribution_month.html</loc>
-  </url>
-  <url>
-    <loc>https://bdshaff.github.io/tidymmm/reference/plot_model_fit.html</loc>
-  </url>
-  <url>
-    <loc>https://bdshaff.github.io/tidymmm/reference/plot_response_curves.html</loc>
-  </url>
-  <url>
-    <loc>https://bdshaff.github.io/tidymmm/reference/plot_roi.html</loc>
-  </url>
-  <url>
-    <loc>https://bdshaff.github.io/tidymmm/reference/response_curves.html</loc>
-  </url>
-  <url>
-    <loc>https://bdshaff.github.io/tidymmm/reference/roi.html</loc>
-  </url>
-  <url>
-    <loc>https://bdshaff.github.io/tidymmm/reference/step_delayed_adstock.html</loc>
-  </url>
-  <url>
-    <loc>https://bdshaff.github.io/tidymmm/reference/step_geometric_adstock.html</loc>
-  </url>
-  <url>
-    <loc>https://bdshaff.github.io/tidymmm/reference/step_hill_saturation.html</loc>
-  </url>
-  <url>
-    <loc>https://bdshaff.github.io/tidymmm/reference/step_weibull_adstock.html</loc>
-  </url>
-  <url>
-    <loc>https://bdshaff.github.io/tidymmm/reference/tidymmm-package.html</loc>
-  </url>
-  <url>
-    <loc>https://bdshaff.github.io/tidymmm/reference/validate_mmm_dataset.html</loc>
-  </url>
-  <url>
-    <loc>https://bdshaff.github.io/tidymmm/reference/weibull_adstock.html</loc>
-  </url>
-  <url>
-    <loc>https://bdshaff.github.io/tidymmm/reference/weibull_adstock_weights.html</loc>
-  </url>
+<urlset xmlns = 'http://www.sitemaps.org/schemas/sitemap/0.9'>
+<url><loc>https://bdshaff.github.io/tidymmm/404.html</loc></url>
+<url><loc>https://bdshaff.github.io/tidymmm/LICENSE-text.html</loc></url>
+<url><loc>https://bdshaff.github.io/tidymmm/LICENSE.html</loc></url>
+<url><loc>https://bdshaff.github.io/tidymmm/articles/Adstock-Weights-and-Transformations.html</loc></url>
+<url><loc>https://bdshaff.github.io/tidymmm/articles/MMM-With-Carryover-And-Saturation.html</loc></url>
+<url><loc>https://bdshaff.github.io/tidymmm/articles/Tuning-Carryover-and-Saturation-Hyperparameters.html</loc></url>
+<url><loc>https://bdshaff.github.io/tidymmm/articles/index.html</loc></url>
+<url><loc>https://bdshaff.github.io/tidymmm/authors.html</loc></url>
+<url><loc>https://bdshaff.github.io/tidymmm/index.html</loc></url>
+<url><loc>https://bdshaff.github.io/tidymmm/news/index.html</loc></url>
+<url><loc>https://bdshaff.github.io/tidymmm/reference/adstock_w.html</loc></url>
+<url><loc>https://bdshaff.github.io/tidymmm/reference/channel_metrics.html</loc></url>
+<url><loc>https://bdshaff.github.io/tidymmm/reference/contrib_decomp.html</loc></url>
+<url><loc>https://bdshaff.github.io/tidymmm/reference/convolve_adstock_weights.html</loc></url>
+<url><loc>https://bdshaff.github.io/tidymmm/reference/decompose.html</loc></url>
+<url><loc>https://bdshaff.github.io/tidymmm/reference/delayed_adstock.html</loc></url>
+<url><loc>https://bdshaff.github.io/tidymmm/reference/delayed_adstock_weights.html</loc></url>
+<url><loc>https://bdshaff.github.io/tidymmm/reference/extract_params.html</loc></url>
+<url><loc>https://bdshaff.github.io/tidymmm/reference/geometric_adstock.html</loc></url>
+<url><loc>https://bdshaff.github.io/tidymmm/reference/geometric_adstock_weights.html</loc></url>
+<url><loc>https://bdshaff.github.io/tidymmm/reference/hill_saturation.html</loc></url>
+<url><loc>https://bdshaff.github.io/tidymmm/reference/index.html</loc></url>
+<url><loc>https://bdshaff.github.io/tidymmm/reference/model_metrics.html</loc></url>
+<url><loc>https://bdshaff.github.io/tidymmm/reference/mroi.html</loc></url>
+<url><loc>https://bdshaff.github.io/tidymmm/reference/plot_base_contribution.html</loc></url>
+<url><loc>https://bdshaff.github.io/tidymmm/reference/plot_channel_contribution.html</loc></url>
+<url><loc>https://bdshaff.github.io/tidymmm/reference/plot_channel_contribution_month.html</loc></url>
+<url><loc>https://bdshaff.github.io/tidymmm/reference/plot_model_fit.html</loc></url>
+<url><loc>https://bdshaff.github.io/tidymmm/reference/plot_response_curves.html</loc></url>
+<url><loc>https://bdshaff.github.io/tidymmm/reference/plot_roi.html</loc></url>
+<url><loc>https://bdshaff.github.io/tidymmm/reference/response_curves.html</loc></url>
+<url><loc>https://bdshaff.github.io/tidymmm/reference/roi.html</loc></url>
+<url><loc>https://bdshaff.github.io/tidymmm/reference/step_delayed_adstock.html</loc></url>
+<url><loc>https://bdshaff.github.io/tidymmm/reference/step_geometric_adstock.html</loc></url>
+<url><loc>https://bdshaff.github.io/tidymmm/reference/step_hill_saturation.html</loc></url>
+<url><loc>https://bdshaff.github.io/tidymmm/reference/step_weibull_adstock.html</loc></url>
+<url><loc>https://bdshaff.github.io/tidymmm/reference/tidymmm-package.html</loc></url>
+<url><loc>https://bdshaff.github.io/tidymmm/reference/validate_mmm_dataset.html</loc></url>
+<url><loc>https://bdshaff.github.io/tidymmm/reference/weibull_adstock.html</loc></url>
+<url><loc>https://bdshaff.github.io/tidymmm/reference/weibull_adstock_weights.html</loc></url>
 </urlset>
+

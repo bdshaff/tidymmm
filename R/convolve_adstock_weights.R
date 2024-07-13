@@ -8,6 +8,7 @@
 #'
 #' @param x vector
 #' @param w weights
+#' @param g vector of group names. Must be length(x)
 #'
 #' @examples
 #' data(mmm_imps)
@@ -20,25 +21,43 @@
 #'
 #'@export
 
-convolve_adstock_weights <- function(x, w){
+# convolve_adstock_weights <- function(x, w){
+#
+#   l = length(w) - 1
+#   w = rev(w)
+#
+#   #padding x
+#   paddep_x <- c(rep(0, l), x, rep(0, l))
+#
+#   y <- vector(length = length(x) + l)
+#
+#   for(i in 1:(length(x) + l)){
+#     sub_vector <- paddep_x[i:(i+l)]
+#     y[i] <- sum(w * sub_vector)
+#   }
+#   y <- y[1:length(x)]
+#
+#   return(y)
+# }
+
+convolve_adstock_weights <- function(x, w, g = NULL){
 
   l = length(w) - 1
   w = rev(w)
 
-  #padding x
-  paddep_x <- c(rep(0, l), x, rep(0, l))
+  if(!is.null(g)){
 
-  y <- vector(length = length(x) + l)
+    stopifnot(length(g) == length(x))
 
-  for(i in 1:(length(x) + l)){
-    sub_vector <- paddep_x[i:(i+l)]
-    y[i] <- sum(w * sub_vector)
+    xg = split(x, g)
+    y = map(xg, ~convolve_x(.x, w, l)) %>% unlist() %>% as.numeric()
+
+  }else{
+    y = convolve_x(x, w, l)
   }
-  y <- y[1:length(x)]
 
   return(y)
 }
-
 
 ## https://en.wikipedia.org/wiki/Generalised_logistic_function
 ## https://en.wikipedia.org/wiki/Logistic_function

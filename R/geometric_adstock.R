@@ -10,6 +10,7 @@
 #'@param decay decay rate
 #'@param max_carryover maximum carryover
 #'@param normalize  should the result be scaled?
+#'@param group_vec vector with group names
 #'
 #'@examples
 #'data(mmm_imps)
@@ -27,10 +28,10 @@
 #'
 #'
 #'@export
-geometric_adstock <- function(x, decay = 0.5, max_carryover = 12, normalize = TRUE){
+geometric_adstock <- function(x, decay = 0.5, max_carryover = 12, normalize = TRUE, group_vec = NULL){
 
   w <- geometric_adstock_weights(decay, max_carryover, normalize)
-  y <- convolve_adstock_weights(x, w)
+  y <- convolve_adstock_weights(x, w, group_vec)
 
   return(y)
 }

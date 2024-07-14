@@ -4,7 +4,13 @@
 \alias{geometric_adstock}
 \title{Geometric Adstock}
 \usage{
-geometric_adstock(x, decay = 0.5, max_carryover = 12, normalize = TRUE)
+geometric_adstock(
+  x,
+  decay = 0.5,
+  max_carryover = 12,
+  normalize = TRUE,
+  group_vec = NULL
+)
 }
 \arguments{
 \item{x}{input vector}
@@ -14,6 +20,8 @@ geometric_adstock(x, decay = 0.5, max_carryover = 12, normalize = TRUE)
 \item{max_carryover}{maximum carryover}
 
 \item{normalize}{should the result be scaled?}
+
+\item{group_vec}{vector with group names}
 }
 \value{
 a numeric vector of length(x) with adstock transformed media impressions.

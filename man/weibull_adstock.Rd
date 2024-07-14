@@ -4,7 +4,14 @@
 \alias{weibull_adstock}
 \title{Weibull Adstock Transformations}
 \usage{
-weibull_adstock(x, shape = 1, scale = 1, max_carryover = 12, normalize = TRUE)
+weibull_adstock(
+  x,
+  shape = 1,
+  scale = 1,
+  max_carryover = 12,
+  normalize = TRUE,
+  group_vec = NULL
+)
 }
 \arguments{
 \item{shape}{decay rate}
@@ -14,6 +21,8 @@ weibull_adstock(x, shape = 1, scale = 1, max_carryover = 12, normalize = TRUE)
 \item{max_carryover}{Max Carryover}
 
 \item{normalize}{should weights be normalized}
+
+\item{group_vec}{vector with group names}
 }
 \description{
 Weibull Adstock Transformations

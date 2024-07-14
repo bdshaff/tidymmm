@@ -4,12 +4,14 @@
 \alias{convolve_adstock_weights}
 \title{Convolve Adstock Weights}
 \usage{
-convolve_adstock_weights(x, w)
+convolve_adstock_weights(x, w, g = NULL)
 }
 \arguments{
 \item{x}{vector}
 
 \item{w}{weights}
+
+\item{g}{vector of group names. Must be length(x)}
 }
 \value{
 a numeric vector of length(x) with adstock transformed media impressions.

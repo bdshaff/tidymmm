@@ -9,7 +9,8 @@ delayed_adstock(
   decay = 0.5,
   delay = 2,
   max_carryover = 12,
-  normalize = TRUE
+  normalize = TRUE,
+  group_vec = NULL
 )
 }
 \arguments{
@@ -20,6 +21,8 @@ delayed_adstock(
 \item{max_carryover}{Max Carryover}
 
 \item{normalize}{should weights be normalized}
+
+\item{group_vec}{vector with group names}
 }
 \description{
 Delayed Adstock Transformations

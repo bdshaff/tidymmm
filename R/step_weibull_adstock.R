@@ -10,6 +10,7 @@
 #'@param scale Scale parameter
 #'@param max_carryover Maximum Carryover parameter for the weibull adstock transformation
 #'@param normalize Should adstock weights be normalized to sum up to 1
+#'@param group_vec vector with group assignment
 #'@param columns A character string of the selected variable names. This field is a placeholder and will be populated once prep() is used.
 #'@param skip A logical. Should the step be skipped when the recipe is baked by bake()? While all operations are baked when prep() is run, some operations may not be able to be conducted on new data (e.g. processing the outcome variable(s)). Care should be taken when using skip = TRUE as it may affect the computations for subsequent operations.
 #'@param id A character string that is unique to this step to identify it
@@ -34,6 +35,7 @@ step_weibull_adstock <- function(
     scale = 1,
     max_carryover = 12,
     normalize = TRUE,
+    group_vec = NULL,
     columns = NULL,
     skip = FALSE,
     id = recipes::rand_id("weibull_adstock")
@@ -48,6 +50,7 @@ step_weibull_adstock <- function(
       scale = scale,
       max_carryover = max_carryover,
       normalize = normalize,
+      group_vec = group_vec,
       columns = columns,
       skip = skip,
       id = id
@@ -69,13 +72,14 @@ prep.step_weibull_adstock <- function(x, training, info = NULL, ...) {
     scale = x$scale,
     max_carryover = x$max_carryover,
     normalize = x$normalize,
+    group_vec = x$group_vec,
     columns = col_names,
     skip = x$skip,
     id = x$id
   )
 }
 
-step_weibull_adstock_new <- function(terms, role, trained, shape, scale, max_carryover, normalize, columns, skip, id) {
+step_weibull_adstock_new <- function(terms, role, trained, shape, scale, max_carryover, normalize, group_vec, columns, skip, id) {
   recipes::step(
     subclass = "weibull_adstock",
     terms = terms,
@@ -85,6 +89,7 @@ step_weibull_adstock_new <- function(terms, role, trained, shape, scale, max_car
     scale = scale,
     max_carryover = max_carryover,
     normalize = normalize,
+    group_vec = group_vec,
     columns = columns,
     skip = skip,
     id = id
@@ -104,7 +109,8 @@ bake.step_weibull_adstock <- function(object, new_data, ...) {
       shape = object$shape,
       scale = object$scale,
       max_carryover = object$max_carryover,
-      normalize = object$normalize
+      normalize = object$normalize,
+      group_vec = object$group_vec
       ))
 
     new_data[[col_name]] <- tmp
@@ -118,6 +124,7 @@ print.step_weibull_adstock <- function(x, width = max(20, options()$width - 31),
   scale <- x$scale
   max_carryover <- x$max_carryover
   normalize <- x$normalize
+  group_vec <- x$group_vec
   msg <- glue::glue("Weibull Adstock (shape {shape}, scale {scale}, maximum carryover {max_carryover} | normalize={normalize})")
   title <- glue::glue("{msg} transformation on ")
   recipes::print_step(x$columns, x$terms, x$trained, title, width)

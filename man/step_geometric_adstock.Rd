@@ -12,6 +12,7 @@ step_geometric_adstock(
   decay = 0.5,
   max_carryover = 12,
   normalize = TRUE,
+  group_vec = NULL,
   columns = NULL,
   skip = FALSE,
   id = recipes::rand_id("geometric_adstock")
@@ -31,6 +32,8 @@ step_geometric_adstock(
 \item{max_carryover}{Maximum Carryover parameter for the geometric adstock transformation}
 
 \item{normalize}{Should adstock weights be normalized to sum up to 1}
+
+\item{group_vec}{vector with group assignment}
 
 \item{columns}{A character string of the selected variable names. This field is a placeholder and will be populated once prep() is used.}
 

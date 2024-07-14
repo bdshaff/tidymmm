@@ -13,6 +13,7 @@ step_weibull_adstock(
   scale = 1,
   max_carryover = 12,
   normalize = TRUE,
+  group_vec = NULL,
   columns = NULL,
   skip = FALSE,
   id = recipes::rand_id("weibull_adstock")
@@ -34,6 +35,8 @@ step_weibull_adstock(
 \item{max_carryover}{Maximum Carryover parameter for the weibull adstock transformation}
 
 \item{normalize}{Should adstock weights be normalized to sum up to 1}
+
+\item{group_vec}{vector with group assignment}
 
 \item{columns}{A character string of the selected variable names. This field is a placeholder and will be populated once prep() is used.}
 

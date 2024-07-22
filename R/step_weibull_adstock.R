@@ -119,6 +119,7 @@ bake.step_weibull_adstock <- function(object, new_data, ...) {
   new_data
 }
 
+#'@export
 print.step_weibull_adstock <- function(x, width = max(20, options()$width - 31), ...) {
   shape <- x$shape
   scale <- x$scale

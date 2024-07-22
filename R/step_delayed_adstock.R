@@ -119,6 +119,7 @@ bake.step_delayed_adstock <- function(object, new_data, ...) {
   new_data
 }
 
+#'@export
 print.step_delayed_adstock <- function(x, width = max(20, options()$width - 31), ...) {
   decay <- x$decay
   delay <- x$delay

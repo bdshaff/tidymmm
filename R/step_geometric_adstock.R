@@ -113,6 +113,7 @@ bake.step_geometric_adstock <- function(object, new_data, ...) {
   new_data
 }
 
+#'@export
 print.step_geometric_adstock <- function(x, width = max(20, options()$width - 31), ...) {
   decay <- x$decay
   max_carryover <- x$max_carryover

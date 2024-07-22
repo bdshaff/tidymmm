@@ -109,6 +109,7 @@ bake.step_hill_saturation <- function(object, new_data, ...) {
   new_data
 }
 
+#'@export
 print.step_hill_saturation <- function(x, width = max(20, options()$width - 31), ...) {
   half_saturation <- x$half_saturation
   shape <- x$shape
